@@ -39,8 +39,9 @@ var rnd = Math.floor(Math.random()*participants.length);
 
 
 for (var key in assignment){
-    while ( team.length < 2 )
+    while ( assignment[key].team.length < 2 ) {
     assignment[key].team.push(participants[rnd]);
+    }
 }
 
 // limits on team array length

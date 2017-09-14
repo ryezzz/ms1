@@ -1,0 +1,12 @@
+polygon{
+    transform: translate(300px);
+    fill: red;
+    width: 800%;
+}
+
+
+/*polygon {*/
+  /* doesn't work in IE */
+/*  transform: translate(295px, 115px);*/
+/*}*/
+    /*transform: translate(50px) rotate(50deg) translateY(15px);*/

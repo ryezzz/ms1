@@ -2,21 +2,35 @@
 <html>
     <head>
         <script src="https://d3js.org/d3.v4.min.js"></script>
-<script>
-    d3.select ('body')
-     .append('svg')
-         .attr('width', window.innerHeight)
-         .attr('height', 500);
-    var svg = d3.select ('svg');
-    svg.append('circle')
-        .attr('r', 20)
-        .attr('cx', 200)
-        .attr('cy', 75);
-        // r is radius
-     
-</script>
+<link rel="stylesheet" href="style.css" type="text/css" />
     </head>
     <body>
-        
+        <script>
+            d3.select('body')
+                .append('svg')
+                .attr('width', window.innerWidth)
+                .attr('height', 500);
+            
+            var svg = d3.select('svg');
+            // selectAll will select all of them
+            // grabs element from dom and appends
+            // go to the svg element and add an element called
+            
+            svg.append('circle')
+                .attr('r', 20)
+                .attr('cx', 200)
+                .attr('cy', 75);
+                
+            svg.append('rect')
+                .attr('x', 300)
+                .attr('y', 50)
+                .attr('width', 50)
+                .attr('height', 50);
+                
+            svg.append('polygon')
+                .attr('transform', 'scale(2)', 'translate(120,120)')
+                .attr('points', '60,30 100,50 100,90 60,110 20,90 20,50')
+                // .attr('points', 'translate(120,0)')
+        </script>
     </body>
 </html>
