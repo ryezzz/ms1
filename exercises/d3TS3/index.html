@@ -11,6 +11,8 @@
         
             d3.select('body')
                 .append('svg')
+                
+                // just created innner width in elements in console
                 .attr('width', window.innerWidth)
                 .attr('height', window.innerHeight);
             
@@ -34,6 +36,39 @@
                         });
                 
                 });
+                // // two options for selections in D3 - select vs. selectAll
+                svg.selectAll('.item')
+                    // select all data within class of data - .data is d3 reserve method
+                    
+                    .data(data)
+                    // array is joined with item elements
+                    
+                    .enter()
+                // this is when the actual join happens
+                // between D3 and data
+                    
+                    // d3 method text sets the text of an element
+                    // .text(i+')'+ d.amount + '|' + d.unit + '|' + d.item + '|' + d.source)
+                    // this function returns a string
+                    .append('text')
+                    
+                    .text(function(d, i) { return i + ') ' + d.amount + ' | ' + d.unit + ' | ' + d.item + ' | ' + d.source; })
+                    // next: set positon
+                     .attr('x', window.innerWidth/2)
+                    .attr('y', function(d, i) { return (i+1) * 30; })
+                    .style('text-anchor', 'middle')
+                    .style('fill', function(d) {
+                            if (d.source == 'store')
+                                return 'rgb(0, 255, 0)';
+                            else
+                                return 'darkgray';
+                            });
+                    
+                    // we use foreach to iterate through JSON file
+                    // every entery iterate through all the content
+                    // we know data is an array
+                    // 
+                
                 
             });
             
