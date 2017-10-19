@@ -18,7 +18,7 @@ a{
     width: 33%;
     height:120px;
     float:left;
-    border-right: #565656 solid .09px;
+    /*border-right: #565656 solid .09px;*/
     /*background-color: red;*/
 }
 
