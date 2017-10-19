@@ -50,13 +50,13 @@ span{
 
 
 h1, h2, p{
-    padding-left: 3%;
+    padding-left: 9.5%;
     padding-right: 30%;
     font-family: 'Roboto', sans-serif;
 
 }
 
-h2, a{
+h2, a, p{
     font-size: .8em;
     font-family: 'Roboto', sans-serif;
 
