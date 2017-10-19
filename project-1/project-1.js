@@ -1,78 +1,89 @@
 // create an svg within my lineChart div
     
-    var svg = d3.select("#lineChart")
-            .append("svg")
-            .attr("height", "100%")
-            .attr("width", "100%");
-            
-    // var countryOne = [];
-    // var countryOneYear = [];
-    // var countryOneGini = [];
-    // var countryTwoYear = [];
-    // var countryTwoGini = [];
-    
-    
-    //  svg.selectAll("circle")
-    // .data(countryOneYear)
-    // .enter().append("circle")
-    // .attr("cx", function(d) { return d.x; })
-    // .attr("cy", function(d) { return d.y; }) 
-    // .attr("r", 2.5);
+var svg = d3.select("#lineChart")
+        .append("svg")
+        .attr("height", "100%")
+        .attr("width", "100%");
+        
+// var countryOne = [];
+// var countryOneYear = [];
+// var countryOneGini = [];
+// var countryTwoYear = [];
+// var countryTwoGini = [];
+
+
+//  svg.selectAll("circle")
+// .data(countryOneYear)
+// .enter().append("circle")
+// .attr("cx", function(d) { return d.x; })
+// .attr("cy", function(d) { return d.y; }) 
+// .attr("r", 2.5);
 
             
 // load data and parse it down to Thailand rows
 
 
 
-    // d3.csv('/project-1/data/wiid.csv', function(error, data) {
-    //         if (error) throw error;
-    //         // svg(data);
-    //         data.forEach(function(d, i) {
-                
-    //             if (d.Country == "Thailand" && d.Year>= 1991){
-    //                 i=i-7825;
-    //                 console.log (i);
-    //                 svg.append('text')
-    //                     .text (d.Year)
-    //                     .attr('x', i * 40)
-    //                     .attr('y', innerHeight/1.1)
-    //                     .style('text-anchor', 'float: left')
-    //                     .style('fill', 'black')
-    //                     .style("font", "9px times");
-    //             }
-                            
-                 
-    //             });
-            
-      
-    // });
-    
-    
-     
-    var countryOne = [];
-    var countryTwo = [];   
-            
-// load data and parse it down to Thailand rows
 
-    d3.csv('/project-1/data/wiid.csv', function(d) {
-            return {
-                // make sure numbers are read as numbers and not as strings
-                Country : d.Country,
-                Year : +d.Year,
-                Gini : +d.Gini
-            };
-            // provide accessor function to d3.sv to return individual objects in data array
-    }, function (data) {    
-        for (var i = 0; i<data.length; i++){
-            var allData = data[i];
-            if (allData.Country == "Thailand" && allData.Year >= 1991){
-            countryOne.push(allData);
-            }
+d3.csv('/project-1/data/wiid.csv', function(error, data) {
+    if (error) throw error;
+    textCreate(data);
+      });
+
+
+function textCreate (data) {
+    
+    data.forEach(function(d, i) {
+        if (d.Country == "Thailand" && d.Year>= 1991){
+            svg.append('text')
+                .text (d.Year)
+                .attr('x', 40)//use scalelinear
+                .attr('y', 40)
+                .style('text-anchor', 'float: left')
+                .style('fill', 'black')
+                .style("font", "9px times");
         }
-      
     });
+}
+
+function circleCreate (circle) {
+    data.forEach(function(d, i) {
+        if (d.Country == "Thailand" && d.Year>= 1991){
+        svg.selectAll('circle')
+        .append('circle')
+        .attr(cx = 250)
+        .attr(cy = 350)
+        }
+}
+    
+    
+
+        
+  
+//     var countryOne = [];
+//     var countryTwo = [];   
+            
+// // load data and parse it down to Thailand rows
+
+//     d3.csv('/project-1/data/wiid.csv', function(d) {
+//             return {
+//                 // make sure numbers are read as numbers and not as strings
+//                 Country : d.Country,
+//                 Year : +d.Year,
+//                 Gini : +d.Gini
+//             };
+//             // provide accessor function to d3.sv to return individual objects in data array
+//     }, function (data) {    
+//         for (var i = 0; i<data.length; i++){
+//             var allData = data[i];
+//             if (allData.Country == "Thailand" && allData.Year >= 1991){
+//             countryOne.push(allData);
+//             }
+//         }
+      
+//     });
  
-    console.log (countryOne);
+//     console.log (countryOne);
 
 
     // console.log(countryOne);

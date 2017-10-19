@@ -1,0 +1,50 @@
+the tools we designed to help us predict the future may be dooming us to repeat the past by replicating and even amplifying societal inequalities that already exist.
+
+ automated decision-making
+
+Is avoiding bias possible? What is bias?
+
+. Avoiding that bias requires an understanding of both very complex technology and very complex social issues.
+
+
+What is social statistical analysis? Using past behavior to predict future actions. Using that analysis to drive policy decisions can encourage repition of that behavior
+
+
+Biased data can create feedback loops that function like a sort of algorithmic confirmation bias, where the system finds what it expects to find rather than what is objectively there.
+
+
+connecting scientist with humanists
+
+Wouldn’t true machine learning move beyond human input?
+
+Machine learning training content is the problem
+
+Comparing some of these examples before and after machine decision making
+
+
+This human urge to move beyond human imperfection and how difficult, if not impossible that is. To move beyond human imperfection as a whole do we need something completely and scarily lacking in humanity?
+
+Human history is a struggle to automate in order to free up time - creating problems of 1. survival 2.efficiency
+
+
+- Many people in the developed word are struggling for survival - Technology focuses on efficiency / ease because fighting issues of survival doesn’t pay
+
+________
+
+“Algorithms only repeat our past, so they don’t have the moral innovation to try and improve our lives or our society,”   
+
+
+- Creativity is the only thing that can change something and AI can’t yet be creative
+
+_________
+
+
+Time
+-------
+
+Models of non-human versions of analysis
+
+Darpa - Selfexplaining AI
+
+https://www.darpa.mil/program/explainable-artificial-intelligence
+

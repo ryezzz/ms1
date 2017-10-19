@@ -1,0 +1,42 @@
+body {
+    background-color: #ffeadd;
+}
+
+.textAlign {
+    fill:  #6f7175;
+    padding-left:1000px;
+    font-family: 'Cutive', serif;
+}
+
+
+.v1div{
+    width: 33%;
+    height:120px;
+    float:left;
+    border-right: #b3b6bc solid .09px;
+    /*background-color: red;*/
+}
+
+text:hover{
+    fill: #f6ff00;
+}
+
+span{
+    font-family: 'Pavanam', sans-serif;
+    width: 33%;
+    height: 10%;
+    /*padding-left: 10.5%;*/
+    margin-top: -10px;
+    /*margin-left: -10px;*/
+    margin-bottom: 40px;
+    background-color: #69889b;
+    color:#c0c1c4;
+    float:left;
+    /*border-bottom: solid black 1px;*/
+    padding-top: 0;
+}
+
+
+h1{
+    padding-left: 10.5%;
+}

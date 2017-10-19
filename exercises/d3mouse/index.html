@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <style type="text/css">
+        body {
+                background: white;
+            
+        }
+        
+        
+        
+        /*svg {*/
+        /*    font-family: sans-serif;*/
+        /*    margin: 5px;*/
+        /*    padding: 0;*/
+        /*    border: 2px solid transparent;*/
+        /*    background: lightgray;*/
+        /*}*/
+        /*svg:hover {*/
+        /*    border: 2px solid black;*/
+        /*}*/
+        /*text.label {*/
+        /*    text-anchor: middle;*/
+        /*    text-size: 0.5em;*/
+        /*}*/
+    </style>
+    <body>
+        
+        <script>
+        
+        d3.select ('body')
+            .append('svg')
+            .attr('width', window.innerWidth)
+            .attr('height', window.innerHeight)
+            .on('mousemove', callback)
+            
+            function callback() {
+                var pos = d3.mouse(this);
+                
+                
+                d3.select('svg')
+                //.insert before append after
+                // select this
+                // where are we currently / scope etc
+                
+                
+                        .insert('circle')
+                        .attr('r', 0)
+                        ///pos is array
+                        .attr('cx', pos[0])
+                        //second element wtih inex 1// array
+                        .attr('cy', pos[1])
+                        .style('fill', 'transparent')
+                        .style('stroke', 'black')
+                        .style('stroke-opacity', 1)
+                    .transition()
+                        .attr('r', 20)
+                        .style('stroke-opacity', 0)
+                        .ease(Math.sqrt)
+                        .duration(3000)
+                        .delay(1000);
+                        
+            }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <style type="text/css">
+        svg {
+            font-family: sans-serif;
+            margin: 5px;
+            padding: 0;
+            border: 2px solid transparent;
+            background: lightgray;
+        }
+        svg:hover {
+            border: 2px solid black;
+        }
+        text.label {
+            text-anchor: middle;
+            text-size: 0.5em;
+        }
+    </style>
+    <body>
+        <script>
+            var min = 100000;
+            var max = 0;
+
+            d3.tsv("LaborInNonAgricultSector.tsv", function(error, data) {
+              if (error) throw error;
+
+                // console.log(data);
+                // Mapping X 
+                var mapX = d3.scaleLinear()
+                    // Time series - Number of years
+                    .domain([0, 24])
+                    // What is it doing? Max and Min of SVG
+                    .range([10, 390]);
+                    
+// This parses data to find min and max
+                data.forEach(function(d) {
+                    // We need this for global mean and global max - We need to think globally
+                    for (var col = 0; col < 24; col++) {
+                        var val = Object.keys(d)[col];
+                        if (min > parseFloat(d[val]))
+                        // if we find a vaalue that is less than minimum we set new min
+                            min = parseFloat(d[val]);
+                        if (max < parseFloat(d[val]))
+                            max = parseFloat(d[val]);
+                    }
+                });
+
+                console.log('min : ' + min + ' max: ' + max);
+        // console log data to see data structure and target it - D3 TSV seperates out elemenets
+        // That how he figured out 24 number
+        
+        // flips min and max
+                var mapY = d3.scaleLinear()
+                    .domain([min, max])
+                    .range([300, 0]);
+
+
+
+                d3.select('body')
+                // data comes into our callback function
+                    .data(data)  // bind data
+                    .enter()  // sticky data
+                    .append('svg')
+                    // data join // appends to each data element/year
+                    // array element that doesn't exist - out of bounds error
+                    
+
+                        .attr('width', 400)
+                        .attr('height', 300)
+                        .each(function(d, i) {
+                            // country name
+                            // this refers to svg - This selects the svg element - differnece between element and attribute
+                            // .each from before connects to data and calls it 248 times
+                            d3.select(this)
+                                .append('text')
+                                    .attr('x', 10)
+                                    .attr('y', 25)
+                                    .text(function() { return d['Country Name']; })
+                            // each column
+                            for (var col = 0; col < 24; col++) {
+                                d3.select(this)
+                                    .append('text')
+                                    // gives a class lable to target with CSS
+                                        .attr('class', 'label')
+                                        // use mapping to make sure they fit with data both orizonally and vertical
+                                        .attr('x', function() { return mapX(col); })
+                                        // -5 allows it to be below baseline
+                                        .attr('y', function() { return mapY(d[Object.keys(d)[col]]) + -5; })
+                                        // interactivity can reveal
+                                        .attr('visibility', 'hidden')
+                                        //first have to make text
+                                        .text(function() { return d[Object.keys(d)[col]]; })
+// appending circle within an already existing text element won't work
+//
+                                d3.select(this)
+                                    .append('circle') // add dom element svg circle
+                                        .attr('r', 2.5)
+                                        .attr('cx', function() { return mapX(col); })
+                                        .attr('cy', function() { return mapY(d[Object.keys(d)[col]]); })
+                
+                
+                //turns the circle white on mouseover
+                                    .on('mouseover', function() {
+                                        d3.select(this)
+                                            .style('fill', 'green');
+                                    });
+                                    
+                                    
+                                    // each fires every time it makes that join
+                                    // d and i data and iterator
+// if data structure is static a much different design than fluid data structure - Importance of AI for retrievign data - Flexibility
+                            }
+                        })
+                        .on('mouseover', function() {
+                            d3.select(this).selectAll('text').attr('visibility', 'visible');
+                        })
+                        .on('mouseout', function() {
+                            d3.select(this).selectAll('text.label').attr('visibility', 'hidden');
+                        });
+            });
+            
+            // Need to tell the program that text and point stay together
+            // Group could bring them together
+            // g is a group
+            // are we introducting structures that we're not using?
+            // Should I make mousover essential for getting information from a data visualization?
+        </script>
+    </body>
+</html>

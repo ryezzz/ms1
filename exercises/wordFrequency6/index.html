@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--p5js download: https://p5js.org/download/-->
+    <!--Content Delivery Network (CDN): https://cdnjs.com/libraries/p5.js-->
+    <title>Word Frequency</title>
+    <!--p5 core library, minified-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.13/p5.min.js" type="text/javascript"></script>
+    <!--p5 interaction with the DOM-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.13/addons/p5.dom.min.js" type="text/javascript"></script>
+
+    <script>
+    var wordFrequency = [];
+    var wordCount = wordFrequency.lengnth;
+    //frequency distribution of text
+    //Typography/arrays and counting
+    // load strings
+    // because we're loading directly from text vs. website
+    function setup(){
+      createCanvas(windowWidth, windowHeight);
+      //load strings returns an array of strings divided at enter
+      loadStrings('sotu.txt', analyze);
+    }
+
+    
+    function analyze(sotu){
+      // console.log(sotu);
+      
+      //turns prhases into text
+      // sotu.forEach(function(phrases){
+      // console.log(phrases);
+      sotu.forEach(function(phrases){
+      // console.log(phrases);
+      //this splits at spaces
+      var words = phrases.split(' ');
+      //now we loop through words individually
+      words.forEach(function(word){
+        // console.log(word);
+        //word could be a dictionary
+        //use the filter to 
+        
+        wordCount = wordFrequency.filter(function(element){
+          return element.word == word;
+        })
+        
+        if (wordCount.length){
+              wordCount[0].count++;
+            } else { 
+              wordFrequency.push({word: word, count: 1});
+          }
+        // word.filter(function(word){
+          
+        // });
+        //make sure the 2 foreaches are closed
+           })
+      });
+      
+      function display(){
+        background(255);
+        //textX acts as curser
+        translate(textX, height/2);
+        
+        wordFrequency.forEach(function(element){
+            textSize(element.count * 2);
+            // word within element
+            text(element.word, 0, 0);
+            //P5 automatically changes text with to 
+            txtWidth(element.word);
+            translate(textWidth);
+            
+        })
+      }
+      
+      
+
+    }
+    
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
