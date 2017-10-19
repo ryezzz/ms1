@@ -1,42 +1,65 @@
 body {
-    background-color: #ffeadd;
+ background-color: #e8e8e8;
 }
 
 .textAlign {
-    fill:  #6f7175;
+    fill:  #565656;
     padding-left:1000px;
     font-family: 'Cutive', serif;
 }
 
+a{
+    color: white;
+    text-decoration: none;
+}
+
 
 .v1div{
-    width: 33%;
+    width: 25%;
     height:120px;
     float:left;
-    border-right: #b3b6bc solid .09px;
+    border-bottom: #565656 solid .09px;
     /*background-color: red;*/
 }
 
-text:hover{
-    fill: #f6ff00;
+::selection {
+  background: #ff4c4c; /* WebKit/Blink Browsers */
+}
+
+::-moz-selection {
+  background: #ff4c4c; /* Gecko Browsers */
+}
+
+a:hover, text:hover{
+    fill: #ff4c4c;
+    color: #ff4c4c;
 }
 
 span{
-    font-family: 'Pavanam', sans-serif;
-    width: 33%;
+  font-family: 'Roboto', sans-serif;
+    width: 110%;
     height: 10%;
-    /*padding-left: 10.5%;*/
     margin-top: -10px;
-    /*margin-left: -10px;*/
+    margin-left: -10px;
     margin-bottom: 40px;
-    background-color: #69889b;
-    color:#c0c1c4;
+    background-color: #565656;
+    color:#b2b2b2;
     float:left;
     /*border-bottom: solid black 1px;*/
     padding-top: 0;
 }
 
 
-h1{
-    padding-left: 10.5%;
+h1, h2, p{
+    padding-left: 3%;
+    padding-right: 30%;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+h2, a{
+    font-size: .8em;
+    font-family: 'Roboto', sans-serif;
+
+
 }
