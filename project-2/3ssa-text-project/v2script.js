@@ -16,7 +16,7 @@ var fontSize = .3;
 //convert text to string of objects manually
 // I need to put the divs within a parent div so I can treat the parent div differently tha
 
-d3.text("/project-2/ssa-text-project/data/14undp.txt", function(error, text) {
+d3.text("https://raw.githubusercontent.com/ryezzz/ms1/master/project-2/ssa-text-project/data/14undp.txt", function(error, text) {
       
       
      
