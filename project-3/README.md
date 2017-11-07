@@ -1,3 +1,1 @@
-Sources:
-
-Odusola, Ayodele, Radhika Lal, Rogers Dhliwayo, Isiyaka Sabo, and James Neuhaus. "Country context matters in promoting equity: Drivers of inequality are heterogeneous in Burkina Faso, Ghana and Tanzania." Income Inequality Trends in sub-Saharan Africa: Divergence, Determinants, and Consequences, 2017. http://www.africa.undp.org/content/dam/rba/docs/Reports/undp-rba_Income%20Inequality%20in%20SSA_Chapter%2014.pdf.
+Odusola, Ayodele, Radhika Lal, Rogers Dhliwayo, Isiyaka Sabo, and James Neuhaus. "Country context matters in promoting equity: Drivers of inequality are heterogeneous in Burkina Faso, Ghana and Tanzania."_[ Income Inequality Trends in sub-Saharan Africa: Divergence, Determinants, and Consequences, 2017.]_( http://www.africa.undp.org/content/dam/rba/docs/Reports/undp-rba_Income%20Inequality%20in%20SSA_Chapter%2014.pdf.)
