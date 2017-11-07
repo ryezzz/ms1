@@ -48,3 +48,19 @@ Darpa - Selfexplaining AI
 
 https://www.darpa.mil/program/explainable-artificial-intelligence
 
+
+____________
+
+
+Readme.md: links/references 
+         : chicago style
+         : make sure to reference everything
+         : endnote for citations
+         : zotero
+         : citation builder/citation machine
+         : good way to locate source and autofill forms
+           *******citationmachine.net*******
+        
+Add source and make it part of a readme that's part of my repository
+
+Site Maps: 
