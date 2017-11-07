@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<style>
+    body {
+        background-color: lightgrey;
+    }
+    div {
+        /*background-color : lightyellow;*/
+        /*border: darkgray solid 1px;*/
+        border-top:1px solid black;
+        font-size: 50px;
+    }
+    
+    div:hover{
+        border-top: 2px solid black;
+    }
+    /*child selector div*/
+    div > div > div:hover {
+        background-color: snow;
+        font-weight: bolder;
+        min-height: 3em;
+        
+    }
+    
+    footer{
+        
+        position: fixed;
+        bottom: 0;
+        min-height: 100;
+        box-shadow: 0px 0px 25px gray;
+        
+    }
+    
+    footer div{
+        width: 100%;
+        border: none;
+        font-size: .5em;
+        
+    }
+    
+    /* div + div {*/
+    /*    background-color: snow;*/
+        
+    /*}*/
+    
+    .container{
+     /*max-width: 100%;*/
+    }
+</style><!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
+    </head>
+        <body>
+            <!--container has default max width-->
+            <div class = "container">
+                
+                <div class = 'row'>
+                    <!--10 of all possible 12 columns-->
+                    <div class = 'col-10'>Col-10</div>
+                    
+                </div>
+                <div class = 'row'>
+                    <!--10 of all possible 12 columns dash means the width of device// -->
+                    <div class = 'col-sm-12 col-md-10 col-lg-8 col-xl-6'>col-sm-12 col-md-10 col-lg-8 col-xl-6</div>
+                    
+                </div>
+                <div class = 'row'>
+                    <!--Multi columns next to eachother col 4 is one third / medium a third and two thirds-->
+                    <div class = 'col-lg-4 col-md-4 col-sm-6'>'col-lg-4 col-md-4 col-sm-6'</div>
+                    <div class = 'col-lg-4 col-md-8 col-sm-6'>'col-lg-4 col-md-8 col-sm-6'</div>
+                    <!--displaynone/visibility hidden display block hide a full column at level-->
+                    <div class = 'col-lg-4 d-lg-block d-none'>'col-lg-4 d-lg-block d-none'</div>
+                    
+                </div>
+                <footer>
+                    <div class = 'row'>
+                        <div class = 'col-sm-2'>foot</div>
+                        <div class = 'col-sm-2'>foot</div>
+                        <div class = 'col-sm-2'>fiit</div>
+                        <div class = 'col-sm-2'>fds</div>
+                        <div class = 'col-sm-2'>fds</div>
+                        <div class = 'col-sm-2'>dfd</div>
+                        
+                    </div>
+                </footer>
+            </div>
+        </body>
+</html>
+
+
+
+<!--classes that do-->
