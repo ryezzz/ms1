@@ -64,7 +64,7 @@ var toolTip2 = d3.select("body").append("div")
     .data(TextData);
     
 
-d3.csv('/project-3/data/ginifrompg316ssa.csv', function(error, data) {
+d3.csv('https://raw.githubusercontent.com/ryezzz/ms1/master/project-3/data/ginifrompg316ssa.csv', function(error, data) {
     
   //sets the paramaters for filtering: There were values of 0 which wern't accurate  
   data = data.filter(function(d) { return d.Year*1 > 1986 && +d.Year < 2015 && d.Gini*1 != 0 && d.Gini*1<60; });
