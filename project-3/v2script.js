@@ -4,7 +4,7 @@ var TextData = "Context, context, context";
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = window.innerWidth - 100,
-    height = window.innerHeight - 40;
+    height = window.innerHeight - 300;
 
 
 var xValue = function(d) { return d.Year;}, // data -> value
