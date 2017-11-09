@@ -63,4 +63,15 @@ Readme.md: links/references
         
 Add source and make it part of a readme that's part of my repository
 
-Site Maps: 
+Site Maps: Flaot - Too wide - All accessible  - too many choices at once 
+
+Wireframes No color, content or the structure of it
+
+Not too wide or too deep 
+
+Too deep - 4 or 5 clicks before someone does anything
+
+3 to 7 sections?
+
+Paper prototyping?
+

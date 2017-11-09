@@ -1,10 +1,10 @@
 //Creating lines to connnect the dots
 // https://www.dashingd3js.com/svg-paths-and-d3js
-
+var TextData = "Context, context, context";
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = window.innerWidth - 100,
-    height = window.innerHeight/2 - 100;
+    height = window.innerHeight - 40;
 
 
 var xValue = function(d) { return d.Year;}, // data -> value
@@ -22,11 +22,19 @@ var yValue = function(d) { return d.Gini}, // data -> value
             .tickValues([30, 35, 40, 45, 50, 55])
             .scale(yScale);
             
-    var mapLine = d.country;
+    // var mapLine = d.country;
    
  // setup fill color
+    // I'm taking my data and returning country
 var cValue = function(d) { return d.Country;},
+    // I'm calling the d3.schemeAccent color pallet
     color = d3.scaleOrdinal(d3.schemeAccent);
+    
+        //returning a color for each cValue
+        
+        //   .style("fill", function(d) { return color(cValue(d));}) 
+
+     
 
     
 var svg = d3.select("body").append("svg")
@@ -44,18 +52,17 @@ var lineFunction = d3.line()
                    .x(function(d) {return xMap(d) })
                    .curve(d3.curveLinear);
                 //   });
-                   
-// .style("fill", function(d) { return color(cValue(d));}) 
 
 // add the tooltip area to the webpage
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
-    .style("color", "white");
+    // .style("color", "#aaa9a9");
 
-// var line = d3.line()
-//     .x(function(d) { return xAxis(d.Year); })
-//     .y(function(d) { return yAxis(d.Gini); });
+var toolTip2 = d3.select("body").append("div")
+    .attr("class", "morenfo")
+    .data(TextData);
+    
 
 d3.csv('/project-3/data/ginifrompg316ssa.csv', function(error, data) {
     
@@ -70,20 +77,12 @@ d3.csv('/project-3/data/ginifrompg316ssa.csv', function(error, data) {
         .entries(data);
         console.log(JSON.stringify(databyYear));
 
-  // change string (from CSV) into number format
-//   yScale.domain([0, d3.max(data, function(d) { return d.Gini*1; })]);
+
       
-//   data = data.filter(function(d) { if(d.Year.count>1){return d.Gini/d.Year.Count});
-        
+
   data.forEach(function(d) {
-    // function year (d) { 
-    // d.Year = d.filter(function(d) { if (d.Year*1>1990){return +d.Year}})
-    //http://learnjsdata.com/group_data.html
     d.Year = +d.Year;
     d.Gini = +d.Gini;
-//    console.log(d);
-    //if there's more than one value for each year, add those values and divide by n
-    console.log(d.Year==d.Year);
   });
   
   // don't want dots overlapping axis, so add in buffer to data domain
@@ -113,47 +112,85 @@ d3.csv('/project-3/data/ginifrompg316ssa.csv', function(error, data) {
       
       
 
-    // .append("text")
-    //   .attr("class", "label")
-    //   .attr("transform", "rotate(-90)")
-    //   .attr("y", 10)
-    //   .attr("dy", ".71em")
-    //   .style("text-anchor", "end")
-    //   .text("Gini");
-   //draw lines
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 10)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Gini");
+
    
 //   svg.append("path")
 //       .attr("class", "line")
 //       .attr("d", lineFunction(data));
-  var g = svg.append('g');
-   
-  var lineGraph =     g.append("path")
-                      .attr("d", lineFunction(data))
-                      .attr("transform", "translate(0,0)")
-                      .attr("stroke", "white")
-                      .attr("stroke-width", .1)
-                      .attr("fill", "none");
-      
+
+
+var data_forLine = (function (){
+            var _a = [];
+            var _b = [];
+            var _c = [];
+            var total = [];
+           for(var i = 0; i<data.length; i++){
+               if(data[i].Country == "Burkina Faso" ){
+                   _a.push(data[i]);
+               }
+               
+               if(data[i].Country == "Ghana" ){
+                   _b.push(data[i]);
+               }
+               
+               if(data[i].Country == "Tanzania" ){
+                   _c.push(data[i]);
+               }
+           }
+           total[0] = _a;
+           total[1] = _b;
+           total[2] = _c;
+           return total;
+         })()
+
+  var g = svg
+        //  .data(data)
+        //  .enter()
+         .append('g')
+         .attr("class", "lineEdit");
+    
+          
+    for(var i = 0 ; i < data_forLine.length; i++){
+        //   data_forLine.forEach(function(d){
+          console.log("Data for line" + data_forLine);
+        //   })
+        g.append("path")
+                          .attr("d", lineFunction(data_forLine[i]))
+                          //I gave a specific id to each line so I could change the color :(
+                          .attr("id", "line" + i)
+                          .attr("transform", "translate(0,0)")
+                          .style("stroke", "black")
+                        //   .style("stroke", function(d) {return color(cValue(d));})
+                          .attr("stroke-width", .8)
+                          .attr("fill", "none");
+    }
+
 // draw dots
   svg.selectAll(".dot")
       .data(data)
       .enter().append("circle")
     //   .filter(function(d) { if (d.Year>1990){return d}})
       .attr("class", "dot")
-      .attr("r", 5)
+      .attr("r", 10)
       .attr("cx", xMap)
       .attr("cy", yMap)
-      .style("fill", function(d) { return color(cValue(d));}) 
+      .style("fill", function(d) { console.log (d.Country); return color(cValue(d));}) 
       .on("mouseover", function(d) {
           tooltip.transition()
                .duration(200)
                .style("opacity", .9)
-               //This changed fill of tooltip text
                .style("fill", "white");
           tooltip.html(d["Country"] + "<br/> (" + xValue(d) 
-	        + ", " + yValue(d) + ")")
-              .style("left", (d3.event.pageX + 5) + "px")
-              .style("top", (d3.event.pageY+ 20) + "px");
+	        + ", " + "Gini: " + yValue(d) + ")")
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");
       })
       
      .on("mouseout", function(d) {
