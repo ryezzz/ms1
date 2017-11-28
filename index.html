@@ -1,19 +1,83 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-        <link rel="stylesheet" href="style.css" type="text/css" />
+  <head>
+    <meta charset="UTF-8">
+    <title>Gini</title>
+    <!--<link rel="stylesheet" href="./style.css" type="text/css" />-->
+     <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
 
-        <title>Rye's MS1 portfolio</title>
-    </head>
+
+</head>
+  <body>
+    <!--<span>TEXT</span>-->
+  	<!--<div class="chart"></div>-->
+
+  </body>
+    <script src="./workingscript.js" type="text/javascript"></script>
+
+  
+    <style> 
     
-    <body>
-        <h1>Rye's MS1 portfolio</h1>
-                <a href="https://ryezzz.github.io/ms1/project-2/ssa-text-project/"><h2>ProjectTwo</h2></a>
-                <a href="https://ryezzz.github.io/ms1/project-2/3ssa-text-project/"><h2>ProjectTwo (Ideal Design)</h2></a>
-       
+    /*.ghana_eIncome_share_held_by_highest_twenty{*/
+    /*  fill: black;*/
+    /*}*/
+    path{
+      stroke: 3px solid black;
+    }
+    svg{
+      /*margin-right:25%;*/
+      float: left;
+    }
+    div:nth-child(odd){
+      /*background-color:#ededed;*/
+      /*padding:20px;*/
+    }
+    
+    tooltip{
+      position: absolute;
+    }
+    rect:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+    
+    .title{
+      padding-left: 50px;
+      padding-top: 10px;
+      border-top: solid lightgray 1px;
+      font-family: 'Alegreya Sans', sans-serif;
+      font-size: 20px;
+      fill: gray;
+      float: right;
+      /*position: absolute;*/
+      /*background: lightgray;*/
 
-        <a href="https://ryezzz.github.io/ms1/project-1/well-documented-failure.pdf"><h2>Project One PDF</h2></a>
-        <a href="https://ryezzz.github.io/ms1/exercises/ballgame/ballgame.html"><h2>Pong Game</h2></a>
-    </body>
+    }
+
+    .chartDiv {
+      /*margin-top: 2%;*/
+      border-top: solid lightgray 1px;
+float: left;
+    }
+    
+    .key{
+      background-color: red;
+      visibility: hidden;
+    }
+    
+    /*svg { }*/
+  
+  text {
+    /*visibility: hidden;*/
+}
+    </style>
 </html>
