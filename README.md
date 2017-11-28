@@ -1,4 +1,4 @@
-# Rye Zupancis: Data Visualization Portfolio for Major Studio at Parsons School of design
+# Rye Zupancis: Data Visualization Portfolio for Major Studio at Parsons School of Design
 
 Analyzing income quintiles in Burkina Faso, Ghana and Tanzania
 </br>
