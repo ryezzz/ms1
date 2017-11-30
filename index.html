@@ -7,10 +7,21 @@
 <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+        <link rel='stylesheet' href='bootstrap/bootstrap.min.css'>
+
 
 
 </head>
   <body>
+    
+    <div class = "container" id = "maintitle">
+      <div class = "row" id = "maintitlerow">
+        <div class="col-12">Income distribution in Ghana, Burkina Faso and Tanzania</div>
+</div>
+      <!--  <div class="col-4">rdsfdf</div>-->
+      <!--  <div class="col-4">2</div>-->
+      </div>
+    </div>
     <!--<span>TEXT</span>-->
   	<!--<div class="chart"></div>-->
 
@@ -20,64 +31,69 @@
   
     <style> 
     
-    /*.ghana_eIncome_share_held_by_highest_twenty{*/
-    /*  fill: black;*/
-    /*}*/
-    path{
-      stroke: 3px solid black;
+    body{
+      font-family: 'Alegreya Sans', sans-serif;
+      		  		    max-width: 100%;
+
+
     }
-    svg{
-      /*margin-right:25%;*/
-      float: left;
+    
+    .tick text{ 
+      fill: darkgray;
     }
-    div:nth-child(odd){
-      /*background-color:#ededed;*/
+    
+    svg * {
+			/*cursor: pointer;*/
+			/*border-bottom: 1px solid black;*/
+		}
+		
+		.statictitle{
+		  float: left;
+		  font-size: 25px;
+		  color: darkgray;	
+		  border-bottom: lightgray solid 1px;
+		  		  		    max-width: 100%;
+
+		  		    /*text-decoration: underline;*/
+		  		    /*padding-top: 100px;*/
+/*float: left;*/
+		}
+		
+		.title{
+		  		  		    max-width: 100%;
+
+		    /*padding-top:20px;*/
+		    /*border-top: lightgray solid 1px;*/
+		  		  /*padding-bottom: 10%;*/
+
+		}
+		
+		#mainTitle{
+		  /*font-size: 20;*/
+		  		    max-width: 100%;
+		  		    background-color: #bad3d8;
+		  		    margin-bottom:2%;
+
+		}
+		
+		#mainTitle{
+    padding-left: 9%;
+    color: white;
+    font-size: 30px;
+		}
+		#togglingTitle {
+		  padding-top: 50px;
+		}
+		
+		.container{
+		  /*border-bottom: darkgray solid 1px;*/
+		}
+
+    .div:nth-child(odd){
+      background-color:#ededed;
       /*padding:20px;*/
     }
     
-    tooltip{
-      position: absolute;
-    }
-    rect:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
-    
-    .title{
-      padding-left: 50px;
-      padding-top: 10px;
-      border-top: solid lightgray 1px;
-      font-family: 'Alegreya Sans', sans-serif;
-      font-size: 20px;
-      fill: gray;
-      float: right;
-      /*position: absolute;*/
-      /*background: lightgray;*/
 
-    }
-
-    .chartDiv {
-      /*margin-top: 2%;*/
-      border-top: solid lightgray 1px;
-float: left;
-    }
-    
-    .key{
-      background-color: red;
-      visibility: hidden;
-    }
-    
-    /*svg { }*/
-  
-  text {
-    /*visibility: hidden;*/
-}
     </style>
 </html>
