@@ -1,6 +1,5 @@
-# Rye Zupancis: Data Visualization Portfolio for Major Studio at Parsons School of Design
+# Analyzing income quintiles in Burkina Faso, Ghana and Tanzania
 
-Analyzing income quintiles in Burkina Faso, Ghana and Tanzania
 </br>
 _Inequality in Sub-Saharan Africa Project for the United Nations Development Program_
 
