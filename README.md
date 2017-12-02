@@ -2,7 +2,7 @@
 
 _Inequality in Sub-Saharan Africa Project for the United Nations Development Program_
 
-[![screen shot 2017-11-28 at 12 47 26 pm](https://user-images.githubusercontent.com/15457713/33451242-6f96482a-d5dc-11e7-8eaf-f14e15ef538c.png)](https://ryezzz.github.io/ms1/)
+[![screen shot 2017-11-28 at 12 47 26 pm](https://user-images.githubusercontent.com/15457713/33511361-646d2fca-d6e7-11e7-961d-2c07aa9c5272.png)](https://ryezzz.github.io/ms1/)
 
 Sources:
 
