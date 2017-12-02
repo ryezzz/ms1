@@ -25,7 +25,7 @@
     <!--<span>TEXT</span>-->
   	<!--<div class="chart"></div>-->
 
-  </body> 
+  </body>
     <script src="./workingscript.js" type="text/javascript"></script>
 
   
@@ -34,12 +34,25 @@
     body{
       font-family: 'Alegreya Sans', sans-serif;
       		  		    max-width: 100%;
+      		  		    
+      background-color: #f4f8ff;
 
 
     }
     
-    .tick text{ 
+    .invisible{
+        visibility: hidden;
+    }
+    
+    .tick text { 
       fill: darkgray;
+      font-size: 10;
+    }
+    
+    
+    .miniTitles { 
+      fill: darkgray;
+      font-size: 15;
     }
     
     svg * {
@@ -76,17 +89,30 @@
 
 		}
 		
+		.innerText{
+		    font-size: 12px;
+		}
+		
 		#mainTitle{
     padding-left: 9%;
     color: white;
     font-size: 30px;
 		}
-		#togglingTitle {
+		#togglingTitle, .tempTitle {
 		  padding-top: 50px;
+		  font-size: 20;
 		}
 		
 		.container{
 		  /*border-bottom: darkgray solid 1px;*/
+		}
+		
+		.domain{
+		    stroke: none
+		}
+		
+		line{
+		    stroke: darkgray
 		}
 
     .div:nth-child(odd){
