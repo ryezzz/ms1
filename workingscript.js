@@ -3,9 +3,12 @@ var container = d3.select("body")
                .attr('class', 'container')
                .attr('id', 'countryContainer')
                
-var margin = {top: 0, right: 0, bottom: 0, left: 0},
-    width = window.innerWidth/3 - margin.left - margin.right,
-    height = window.innerHeight/3.5- margin.top - margin.bottom;
+var key = container
+          .append('div')
+               
+var margin = {top: 10, right: 0, bottom: 14, left: 0},
+    width = window.innerWidth/4 - margin.left - margin.right,
+    height = window.innerHeight/4- margin.top - margin.bottom;
     
 var unParsedData =[];
         
@@ -17,11 +20,11 @@ var y = d3.scaleBand()
           .rangeRound([height,0])
           .padding(0.3);
           
-var colorArray = ["#b6212d", "#7f171f", "#21b6a8", "#ef951a", "#177575", "3#b67721", "#21b6a8"]
+var colorArray = ["#0a97d9", "#e5243b", "#4c9f38", "#fcc30b", "#a21942", "3#b67721", "#56c02b"]
 
 var z = d3.scaleOrdinal()
-        // .range(d3.schemePaired);
-          .range(["#21b6a8", "#177575", "#b6212d", "#7f171f", "#ef951a", "#ef951a"]); 
+        // .range(d3.schemePaired);26bde2
+          .range(["#4c9f38", "#a21942", "#0a97d9", "#e5243b", "#fd9d24", "#fcc30b"]); 
           
 //Stacked Area Chart
 var parseDate = d3.timeParse("%Y");
@@ -66,8 +69,7 @@ function render(data, i){
      var titleDiv =  container
                     .append('div')
                     .attr('class', 'row')
-                    .append('div')
-                    .attr('class','col-4')
+                    
                     // .append('svg').attr('class', 'title')
                     // .attr("width", window.innerWidth)
                     // .attr('height', 30)
@@ -82,24 +84,31 @@ function render(data, i){
                             // .append("div")
                             // .attr("class","row")
                             .append('div')
+    	
                             .attr('class','col-4')
                             .attr('id', "togglingTitle")
+    // Make min and max of years
+    var years = []
+
+    for(var i=0; i<data.length; i++){
+        years.push(data[i].Time)
+    }
 
     var svgStacked = chartsRow
                     .append('div')
                     .attr('class','col-4')
                     .append('svg')
                     .attr('id', "svg" + countryName + "AreaChart")
-                    .attr('width', window.innerWidth/4).attr('height', window.innerHeight/3.5),
+                    .attr('width', window.innerWidth/4).attr('height', window.innerHeight/4),
                     
-        marginStacked = {top: 10, right: 0, bottom: 30, left: 35},
+        marginStacked = {top: 24, right: 25, bottom: 30, left: 35},
         
         widthStacked = svgStacked.attr("width") - marginStacked.left - marginStacked.right,
         
         heightStacked = svgStacked.attr("height") - marginStacked.top - marginStacked.bottom;
 
 
-    var xStacked = d3.scaleTime().range([0, widthStacked]),
+    var xStacked = d3.scaleLinear().range([0, widthStacked]),
         yStacked = d3.scaleLinear().range([heightStacked, 0]);
     // zStacked = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -133,12 +142,7 @@ function render(data, i){
       .style("stroke",function(d) { return z(d); })
       .attr("d", area);
       
-// Make min and max of years
-    var years = []
 
-    for(var i=0; i<data.length; i++){
-        years.push(data[i].Time)
-    }
 
      //CREATE CHANGE ARRAY FOR BAR CHART AND TEXT 
     var singleCountryChange = [];
@@ -180,7 +184,7 @@ function render(data, i){
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + heightStacked + ")")
     //   .call(d3.axisBottom(xStacked).ticks(data.length).tickValues(years));
-          .call(d3.axisBottom(xStacked).ticks(data.length).tickValues([years[0], years[3], d3.max(years)]));
+     .call(d3.axisBottom(xStacked).ticks(data.length).tickFormat(d3.format("d")).tickValues([years[0], d3.max(years)]));
     gStacked.append("g")
       .attr("class", "axis axis--y")
       .call(d3.axisLeft(yStacked).ticks(2, "%"));
@@ -196,23 +200,41 @@ function render(data, i){
               .attr("height", height + margin.top + margin.bottom)
               .attr("class", 'barChartSVG')
               .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
+
+//adding mini chart titles
+         svg
+        .append("text")      // text label for the x axis
+        .attr("class", "miniTitles")
+        .attr("x", width/2 )
+        .attr("y", 5)
+        .style("text-anchor", "middle")
+        .html("Neg. Change  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  Pos. Change" );
         
+         svgStacked
+        .append("text")// text label for the x axis
+        .attr("class", "miniTitles")
+        .attr("x", width/2 )
+        .attr("y", 13 )
+        .style("text-anchor", "middle")
+        .text("Income Shares" );
 // /////////////////////data cleaned, create Pos NEG Bar Chart///////////////////////////////////////
         
-    x.domain([-50, 50]);
+    x.domain([-35, 35]);
     y.domain(allChangeArr.map(function(d) { return d.Category; }));
     
     svg.selectAll(".bar")
                 .data(allChangeArr)
                 .enter()
+                
                 .append("rect")
                 .attr("class", function(d,i){
                     classArrayForInteraction.push(objectKeys[i])
                     return objectKeys[i]
-                    })                    
+                    }) 
+                    					 .transition()
+
                 .attr("x", function(d){
                     return d.Change < 0 ? x(d.Change) : x(0); 
                     })
@@ -236,6 +258,15 @@ function render(data, i){
      } else {return "increased"};
  }
  
+  function increaseDecreaseEquality(increasedordecreased, category){
+     if (category == "something"){
+         return("a decrease in equality")
+     }
+     
+     
+     
+ }
+ 
  function parseClass(objectkey){ 
      return objectkey.replace('aIncome', "Income")
                  .replace('bIncome', "Income")
@@ -256,22 +287,19 @@ togglingTitle
     //   .style("text-anchor", "end")
       
       .text(function(d, i) {
-          var thisText = parseClass(objectKeys[i]) + increasedDecreased(allChangeArr[i].Change*1) + " from " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change.";
+          var thisText = parseClass(objectKeys[i]) + increasedDecreased(allChangeArr[i].Change*1) + " from " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change" + " representing" + increaseDecreaseEquality(increasedDecreased(allChangeArr[i].Change*1) , objectKeys[i]);
           return thisText;
 
       })
-      
-    //   .style("fill", function(d) {  
-    //                     for(var i=0; i<objectColors.length; i++){
-    //         		         if(d.Category === objectColors[i].Category){
-    //         		            return objectColors[i].color ;
-    //         		         }
-    //         			}    
-    // 		    	})
-    
       .style("font-size", 0)
-          .style("fill", "red")
+      .style("fill", "red")
 
+var tempTitle = togglingTitle
+                .data(data)
+                .append("text")
+                .attr("class","tempTitle")
+                .text(function(d){ if (d.Country_Name == "Ghana"){return "Ghana represents countries that follow a downward equality trend"}})
+                
 
 
 
@@ -304,9 +332,11 @@ togglingTitle
 								return (x(d.Change) - x(0)) > 20 ? "#fff" : "#3a403d";
 							}
 						})
-						.attr("text-anchor", "end")
+						.attr("text-anchor", function(d){ if (d.Change<-3){return "beginning"}else{return "end"}})
 				        // .text(function(d){ return format(d.Change)+"%"; });
-				// 	  .text(function(d){ return d.Change; });
+					  .text(function(d){ return format(d.Change) + "%"; })
+					  .attr('class', 'innerText')
+					  .style("opacity", ".7")
                        
     
                     
@@ -326,8 +356,8 @@ togglingTitle
 					svg.append("line")
 						.attr("x1", x(0))
 						.attr("x2", x(0))
-						.attr("y1", 0 + margin.top)
-						.attr("y2", height - margin.top)
+						.attr("y1", 0 + 15)
+						.attr("y2", height - 15)
 						.attr("stroke", "#c4c4c4")
 						.attr("stroke-width", "1px");
 ///////////////////////Interactivity/////////////////////////////////////
@@ -362,12 +392,16 @@ togglingTitle
 
                     for(var j = 0; j < classArrayForInteraction.length; j++){
                             if(classArrayForInteraction[j] != this.className.baseVal){
-                            d3.selectAll('.'+classArrayForInteraction[j]+"text").style("font-size", 0)    .style("fill", "red")
+                            d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "hidden")    .style("fill", "red")
 ; 
                             d3.selectAll('.'+classArrayForInteraction[j]).transition()
                             .duration(200).style('opacity', 0.1 )
                             // .text("hello")
-                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("font-size", 20)} 
+                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", 20);
+                                
+                                d3.selectAll('.'+"tempTitle").style("visibility", "hidden")
+                                
+                            } 
                      }
                      
                      
@@ -379,6 +413,7 @@ togglingTitle
                     for(var j = 0; j < classArrayForInteraction.length; j++){
                         d3.selectAll('.'+classArrayForInteraction[j]+"text").style("font-size", 0)
                          d3.selectAll('.'+classArrayForInteraction[j]).style("font-size", 0)
+                         d3.selectAll('.'+"tempTitle").style("visibility", "visible")
                          
                             d3.selectAll('.'+classArrayForInteraction[j])
                             .transition()
@@ -397,11 +432,18 @@ togglingTitle
     useClassForInteraction()
     
     titleDiv
+        .append('div')
+        .attr('class','col-4')
         .append('text')
         .attr('class', 'staticTitle')
         .text(function(){return countryName.replace('_', ' ') + " from " + d3.min(years) + " to " + d3.max(years)})
         .attr('alignment-baseline','hanging')
+        
     }
+    
+    
+    
+    
     
     
 
