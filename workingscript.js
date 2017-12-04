@@ -1,3 +1,5 @@
+var bootstrapClass = 'col-lg-4 col-sm-12'
+
 var container = d3.select("body")
                .append("div")
                .attr('class', 'container')
@@ -7,9 +9,14 @@ var key = container
           .append('div')
                
 var margin = {top: 10, right: 0, bottom: 14, left: 0},
-    width = window.innerWidth/4 - margin.left - margin.right,
+    width = window.innerWidth/3.5- margin.left - margin.right,
     height = window.innerHeight/4- margin.top - margin.bottom;
     
+
+if(window.innerWidth<500){
+    width = window.innerWidth/1.2
+}  
+
 var unParsedData =[];
         
 //Positive and Negative Bar Chart          
@@ -20,7 +27,7 @@ var y = d3.scaleBand()
           .rangeRound([height,0])
           .padding(0.3);
           
-var colorArray = ["#0a97d9", "#e5243b", "#4c9f38", "#fcc30b", "#a21942", "3#b67721", "#56c02b"]
+var colorArray = ["#0a97d9", "#e5243b", "#4c9f38", "#fcc30b", "#a21942"]
 
 var z = d3.scaleOrdinal()
         // .range(d3.schemePaired);26bde2
@@ -79,13 +86,19 @@ function render(data, i){
                     .append('div')
                     .attr('class', 'row')
                     
+ function parseClass(objectkey){ 
+     return objectkey.replace('aIncome', "Income")
+                 .replace('bIncome', "Income")
+                 .replace('cIncome', "Income")
+                 .replace('dIncome', "Income")
+                 .replace('eIncome', "Income")
+                 .replace('twenty', " quintile ")
+                 .replace('by', " by the ")
+                 .replace(/_/g, ' ')}    		    	
         
     var togglingTitle =  chartsRow
-                            // .append("div")
-                            // .attr("class","row")
                             .append('div')
-    	
-                            .attr('class','col-4')
+                            .attr('class', bootstrapClass)
                             .attr('id', "togglingTitle")
     // Make min and max of years
     var years = []
@@ -96,17 +109,19 @@ function render(data, i){
 
     var svgStacked = chartsRow
                     .append('div')
-                    .attr('class','col-4')
+                    .attr('class', bootstrapClass)
                     .append('svg')
                     .attr('id', "svg" + countryName + "AreaChart")
-                    .attr('width', window.innerWidth/4).attr('height', window.innerHeight/4),
+                    .attr('width', width).attr('height', window.innerHeight/3.9),
                     
-        marginStacked = {top: 24, right: 25, bottom: 30, left: 35},
+        marginStacked = {top: 20, right: 25, bottom: 30, left: 35},
         
         widthStacked = svgStacked.attr("width") - marginStacked.left - marginStacked.right,
         
         heightStacked = svgStacked.attr("height") - marginStacked.top - marginStacked.bottom;
 
+  
+  
 
     var xStacked = d3.scaleLinear().range([0, widthStacked]),
         yStacked = d3.scaleLinear().range([heightStacked, 0]);
@@ -132,17 +147,31 @@ function render(data, i){
     var layer = gStacked.selectAll(".layer")
               .data(stack(data))
               .enter().append("g")
-              .attr("class", "layer");
+              .attr("class", "layer")
+
 
     layer.append("path")
       .attr("class", function(d,i){
           return objectKeys[i]
       })
       .style("fill", function(d) { return z(d); })
-      .style("stroke",function(d) { return z(d); })
-      .attr("d", area);
-      
 
+      .style("stroke",function(d) { return z(d); })
+      .attr("d", area)
+
+      
+     layer.filter(function(d) { return d[d.length - 1][1] - d[d.length - 1][0] > 0.01; })
+    .append("text")
+      .attr('class', 'innerText')
+      .attr("x", widthStacked - 6)
+      .attr("y", function(d) { return yStacked((d[d.length - 1][0] + d[d.length - 1][1]) / 2); })
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .style("fill", "white")
+      .style("opacity", ".5")
+      .text(function(d,i) { var parsed = parseClass(objectKeys[i])
+          
+          return parsed.replace("Income share held", " ").replace("by the", "") ; })
 
      //CREATE CHANGE ARRAY FOR BAR CHART AND TEXT 
     var singleCountryChange = [];
@@ -194,7 +223,7 @@ function render(data, i){
         
     var svg = chartsRow
               .append('div')
-              .attr('class','col-4')
+              .attr('class',bootstrapClass)
               .append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
@@ -233,14 +262,18 @@ function render(data, i){
                     classArrayForInteraction.push(objectKeys[i])
                     return objectKeys[i]
                     }) 
-                    					 .transition()
+                    
+                .attr('x', '0')
 
                 .attr("x", function(d){
                     return d.Change < 0 ? x(d.Change) : x(0); 
                     })
-    				.attr("width", function(d){
+                .transition().duration(300)
+    			.attr("width", function(d){
     				return d.Change < 0 ? x(d.Change * -1) - x(0) : x(d.Change) - x(0);
     				})
+    				                    					 
+
                 .attr("y", function(d){ 
                     return y(d.Category); 
                     })
@@ -267,15 +300,6 @@ function render(data, i){
      
  }
  
- function parseClass(objectkey){ 
-     return objectkey.replace('aIncome', "Income")
-                 .replace('bIncome', "Income")
-                 .replace('cIncome', "Income")
-                 .replace('dIncome', "Income")
-                 .replace('eIncome', "Income")
-                 .replace('twenty', " quintile ")
-                 .replace('by', " by the ")
-                 .replace(/_/g, ' ')}    		    	
 ////Interactivity			        
 togglingTitle
       .selectAll ('text')
@@ -283,22 +307,42 @@ togglingTitle
       .enter()
       .append("text")
       .attr('class', function(d, i){return classArrayForInteraction[i]+"text"})
-    //   .style("font", "10px sans-serif")
-    //   .style("text-anchor", "end")
-      
-      .text(function(d, i) {
-          var thisText = parseClass(objectKeys[i]) + increasedDecreased(allChangeArr[i].Change*1) + " from " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change" + " representing" + increaseDecreaseEquality(increasedDecreased(allChangeArr[i].Change*1) , objectKeys[i]);
+      .text(function(d){
+         return  countryName.replace('_', ' ') + " from " + d3.min(years) 
+      })
+      .html(function(d, i) {
+          var thisText = parseClass(objectKeys[i]) +"<span class = 'increasedDecreasedHighlight'>" + increasedDecreased(allChangeArr[i].Change*1) + "</span>" + "&nbspfrom " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change."
           return thisText;
+      
+              
+                        // var thisText = "<span class = 'staticTitle'>" + countryName.replace('_', ' ') + " from " + d3.min(years) + " to " + d3.max(years) + "</span>" + "<span class ="+ "'" +classArrayForInteraction[i]+"text" + "'>"+ parseClass(objectKeys[i]) + increasedDecreased(allChangeArr[i].Change*1) + " from " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change." + "</span>" 
+    
+              
+              
+                    //   + " representing" + increaseDecreaseEquality(increasedDecreased(allChangeArr[i].Change*1) , objectKeys[i]);
 
       })
+
       .style("font-size", 0)
       .style("fill", "red")
 
-var tempTitle = togglingTitle
-                .data(data)
-                .append("text")
-                .attr("class","tempTitle")
-                .text(function(d){ if (d.Country_Name == "Ghana"){return "Ghana represents countries that follow a downward equality trend"}})
+// d3.selectAll('.increasedDecreasedHighlight')
+// .data(allChangeArr)
+// .style("background-color", function(d, j) {  
+//                         for(var i=0; i<objectColors.length; i++){
+//             		         if(d.Category === objectColors[i].Category){
+//             		            return objectColors[i].color ;
+//             		         }
+//             			}    
+//     		    	})
+// .attr("fill", "white")
+// .style("background-color", "red")
+console.log(allChangeArr[0])
+// var tempTitle = togglingTitle
+//                 .data(data)
+//                 .append("text")
+//                 .attr("class","tempTitle")
+//                 .text(function(d){ if (d.Country_Name == "Ghana"){return "Ghana represents countries that follow a downward equality trend"}})
                 
 
 
@@ -356,8 +400,8 @@ var tempTitle = togglingTitle
 					svg.append("line")
 						.attr("x1", x(0))
 						.attr("x2", x(0))
-						.attr("y1", 0 + 15)
-						.attr("y2", height - 15)
+						.attr("y1", height/16)
+						.attr("y2", height/1.059)
 						.attr("stroke", "#c4c4c4")
 						.attr("stroke-width", "1px");
 ///////////////////////Interactivity/////////////////////////////////////
@@ -392,14 +436,15 @@ var tempTitle = togglingTitle
 
                     for(var j = 0; j < classArrayForInteraction.length; j++){
                             if(classArrayForInteraction[j] != this.className.baseVal){
-                            d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "hidden")    .style("fill", "red")
+                            d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "hidden")
+                            // d3.selectAll('.'+"staticTitle").style("visibility", "hidden")
 ; 
                             d3.selectAll('.'+classArrayForInteraction[j]).transition()
                             .duration(200).style('opacity', 0.1 )
                             // .text("hello")
-                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", 20);
+                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", 16);
                                 
-                                d3.selectAll('.'+"tempTitle").style("visibility", "hidden")
+                                // d3.selectAll('.'+"tempTitle").transition().style("visibility", "hidden")
                                 
                             } 
                      }
@@ -413,7 +458,7 @@ var tempTitle = togglingTitle
                     for(var j = 0; j < classArrayForInteraction.length; j++){
                         d3.selectAll('.'+classArrayForInteraction[j]+"text").style("font-size", 0)
                          d3.selectAll('.'+classArrayForInteraction[j]).style("font-size", 0)
-                         d3.selectAll('.'+"tempTitle").style("visibility", "visible")
+                        //  d3.selectAll('.'+"tempTitle").style("visibility", "visible")
                          
                             d3.selectAll('.'+classArrayForInteraction[j])
                             .transition()
@@ -433,7 +478,7 @@ var tempTitle = togglingTitle
     
     titleDiv
         .append('div')
-        .attr('class','col-4')
+        .attr('class', bootstrapClass)
         .append('text')
         .attr('class', 'staticTitle')
         .text(function(){return countryName.replace('_', ' ') + " from " + d3.min(years) + " to " + d3.max(years)})
@@ -504,12 +549,28 @@ var tempTitle = togglingTitle
                 }
             });  
             
-        // d3.select('body')
-        //     .data(objectKeys)
-        //     .append('div')
-        //     .attr('class', 'key')
-        //     .append('rect')
-            // .attr('color', function(d) { return z(d.length)})
+         var keyContainer = d3.select('body')
+                            .append('div')
+                            .append('svg')
+                            .append('g')
+                            .attr('class', 'container')
+                            .attr('width', 100)
+          .attr('height', 50)
+            
+            var keys = keyContainer.selectAll('rect')
+                    .data(objectColors)
+                    .enter()
+                    .append('rect')
+                    .attr("x", function(d,i){return i*20})
+                    .attr("y", 10)
+                    .attr('width', 10)
+                    .attr('height', 10)
+                    .attr('class', 'key')
+            // .append('rect')
+            .attr('fill', function(d) { return d.color})
+            
+            console.log(objectColors)
+            
         render(country2)
         render(country1)
         render(country3)
@@ -540,5 +601,5 @@ var tempTitle = togglingTitle
     
 
 /// If I hover over THIS class, return THIS paragraph associated with this class
-//fdsfd
+
 
