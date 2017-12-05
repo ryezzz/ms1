@@ -442,7 +442,7 @@ console.log(allChangeArr[0])
                             d3.selectAll('.'+classArrayForInteraction[j]).transition()
                             .duration(200).style('opacity', 0.1 )
                             // .text("hello")
-                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", 16);
+                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", 30);
                                 
                                 // d3.selectAll('.'+"tempTitle").transition().style("visibility", "hidden")
                                 
