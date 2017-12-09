@@ -7,7 +7,10 @@ var container = d3.select("body")
                
 var key = container
           .append('div')
-               
+
+
+var togglingTitleFontSize = '1.5vw';
+
 var margin = {top: 10, right: 0, bottom: 14, left: 0},
     width = window.innerWidth/3.5- margin.left - margin.right,
     height = window.innerHeight/4- margin.top - margin.bottom;
@@ -27,11 +30,11 @@ var y = d3.scaleBand()
           .rangeRound([height,0])
           .padding(0.3);
           
-var colorArray = ["#0a97d9", "#e5243b", "#4c9f38", "#fcc30b", "#a21942"]
+var colorArray = ["#0a97d9", "#ea504b", "#4c9f38", "#fcc30b", "#a21942"]
 
 var z = d3.scaleOrdinal()
         // .range(d3.schemePaired);26bde2
-          .range(["#4c9f38", "#a21942", "#0a97d9", "#e5243b", "#fd9d24", "#fcc30b"]); 
+          .range(["#4c9f38", "#a21942", "#0a97d9", "#ea504b", "#fd9d24", "#fcc30b"]); 
           
 //Stacked Area Chart
 var parseDate = d3.timeParse("%Y");
@@ -45,6 +48,13 @@ var objectKeys = [];
 
 // Where I put my key value pairs of colors
 var objectColors = []
+
+
+//Start overlay
+
+//End overlay
+
+
 
     
 //This is an array of ALL countries combined with their change listed              
@@ -213,7 +223,9 @@ function render(data, i){
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + heightStacked + ")")
     //   .call(d3.axisBottom(xStacked).ticks(data.length).tickValues(years));
-     .call(d3.axisBottom(xStacked).ticks(data.length).tickFormat(d3.format("d")).tickValues([years[0], d3.max(years)]));
+         .call(d3.axisBottom(xStacked).ticks(data.length).tickFormat(d3.format("d")).tickValues([years[0], (years[0]+d3.max(years))/2 , d3.max(years)]));
+
+    //   .call(d3.axisBottom(xStacked).ticks(3).tickValues(years));
     gStacked.append("g")
       .attr("class", "axis axis--y")
       .call(d3.axisLeft(yStacked).ticks(2, "%"));
@@ -338,11 +350,25 @@ togglingTitle
 // .attr("fill", "white")
 // .style("background-color", "red")
 console.log(allChangeArr[0])
-// var tempTitle = togglingTitle
-//                 .data(data)
-//                 .append("text")
-//                 .attr("class","tempTitle")
-//                 .text(function(d){ if (d.Country_Name == "Ghana"){return "Ghana represents countries that follow a downward equality trend"}})
+var tempTitle = togglingTitle
+                .data(data)
+                .append("text")
+                .attr("class","tempTitle")
+                .text(function(d){ 
+                    
+                    if (d.Country_Name == "Ghana"){
+                        return "Ghana represents countries that follow a downward equality trend"
+                        
+                    } else if (d.Country_Name == "Burkina_Faso"){
+                        return "Burkina Faso represents countries that follow an increasing equality trend"
+                    } else if (d.Country_Name == "Tanzania"){
+                        return "Tanzania represents a u-shaped equality trend"
+                    }
+                    
+                    
+                })
+                
+                .style("font-size", togglingTitleFontSize)
                 
 
 
@@ -442,9 +468,9 @@ console.log(allChangeArr[0])
                             d3.selectAll('.'+classArrayForInteraction[j]).transition()
                             .duration(200).style('opacity', 0.1 )
                             // .text("hello")
-                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", 30);
+                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", togglingTitleFontSize);
                                 
-                                // d3.selectAll('.'+"tempTitle").transition().style("visibility", "hidden")
+                                d3.selectAll('.'+"tempTitle").transition().style("visibility", "hidden")
                                 
                             } 
                      }
@@ -458,7 +484,7 @@ console.log(allChangeArr[0])
                     for(var j = 0; j < classArrayForInteraction.length; j++){
                         d3.selectAll('.'+classArrayForInteraction[j]+"text").style("font-size", 0)
                          d3.selectAll('.'+classArrayForInteraction[j]).style("font-size", 0)
-                        //  d3.selectAll('.'+"tempTitle").style("visibility", "visible")
+                         d3.selectAll('.'+"tempTitle").style("visibility", "visible")
                          
                             d3.selectAll('.'+classArrayForInteraction[j])
                             .transition()
