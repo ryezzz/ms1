@@ -8,7 +8,7 @@ var container = d3.select("#countryContainer")
 var key = container
           .append('div')
           
-var togglingTitleFontSize = '1.5vw';
+var togglingTitleFontSize = '2vw';
 
 var allcountries = []
 
@@ -18,7 +18,7 @@ var countriescheckforrepeat = [];
         
 var togglingTitleFontSize = '1.5vw';
 
-var margin = {top: 20, right: 0, bottom: 14, left: 0},
+var margin = {top: 40, right: 0, bottom: 14, left: 0},
     width = window.innerWidth/1.2- margin.left - margin.right,
     height = window.innerHeight+1000- margin.top - margin.bottom;
     
@@ -292,6 +292,8 @@ countriesFullObject.sort(function(obj2, obj1) {
     		       
     		       d3.select( "#"+ d.Category+d.Country+d.StartingYear)
     		                    .attr("fill", "#000000")
+    		                    
+    		                    .attr("font-size", 300)
 
                     div.transition()		
                         .duration(200)		
