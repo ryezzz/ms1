@@ -30,11 +30,11 @@ var y = d3.scaleBand()
           .rangeRound([height,0])
           .padding(0.3);
           
-var colorArray = ["#0a97d9", "#ea504b", "#4c9f38", "#fcc30b", "#a21942"]
+var colorArray = ["#0a97d9", "#6254a8", "#2f9969", "#fcc30b", "#a21942"]
 
 var z = d3.scaleOrdinal()
         // .range(d3.schemePaired);26bde2
-          .range(["#4c9f38", "#a21942", "#0a97d9", "#ea504b", "#fd9d24", "#fcc30b"]); 
+          .range(["#2f9969", "#a21942", "#0a97d9", "#6254a8", "#fd9d24", "#fcc30b"]); 
           
 //Stacked Area Chart
 var parseDate = d3.timeParse("%Y");
@@ -102,7 +102,7 @@ function render(data, i){
                  .replace('cIncome', "Income")
                  .replace('dIncome', "Income")
                  .replace('eIncome', "Income")
-                 .replace('twenty', " quintile ")
+                 .replace('twenty', " quintile of the population ")
                  .replace('by', " by the ")
                  .replace(/_/g, ' ')}    		    	
         
@@ -356,14 +356,14 @@ var tempTitle = togglingTitle
                 .attr("class","tempTitle")
                 .text(function(d){ 
                     
-                    if (d.Country_Name == "Ghana"){
-                        return "Ghana represents countries that follow a downward equality trend"
+                    // if (d.Country_Name == "Ghana"){
+                    //     return "Ghana represents countries that follow a downward equality trend."
                         
-                    } else if (d.Country_Name == "Burkina_Faso"){
-                        return "Burkina Faso represents countries that follow an increasing equality trend"
-                    } else if (d.Country_Name == "Tanzania"){
-                        return "Tanzania represents a u-shaped equality trend"
-                    }
+                    // } else if (d.Country_Name == "Burkina_Faso"){
+                    //     return "Burkina Faso represents countries that follow an increasing equality trend."
+                    // } else if (d.Country_Name == "Tanzania"){
+                    //     return "Tanzania represents a u-shaped equality trend."
+                    // }
                     
                     
                 })
@@ -519,11 +519,12 @@ var tempTitle = togglingTitle
     
 
     //LAYER INTERACTIVITY
-    d3.csv ("data/wdidata.csv", type, function(error, data){
+    d3.csv ("data/wdialldata.csv", type, function(error, data){
             // if (error) console.log(error);
         data.forEach(function(d){
             
         d.Time = +d.Time
+        d.Country_Name =d.Country_Name.replace(" ", "_")
            
     
         });

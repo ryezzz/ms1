@@ -11,149 +11,83 @@
 
         <link rel='stylesheet' href='bootstrap/bootstrap.min.css'>
 
-
-
-</head>
-  <body>
-  	
-  	
-  	<!--OVERAY TEST-->
-<!--  	<div id="myNav" class="overlay">-->
-<!--  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
-<!--  <div class="overlay-content">-->
-  	
-<!--  	<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit,-->
-<!--  	sed diam nonummy nibh euismod tincidunt ut laoreet dolore-->
-<!--  	magna aliquam erat volutpat. Ut wisi enim ad minim veniam,-->
-<!--  	quis nostrud exerci tation ullamcorper suscipit lobortis nisl-->
-<!--  	ut aliquip ex ea commodo consequat. Duis autem vel eum iriure-->
-<!--	</p>-->
-  	
-<!--  	<img src="test.png" width = "50"></img>-->
-  	
-<!--  		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit,-->
-<!--  	sed diam nonummy nibh euismod tincidunt ut laoreet dolore-->
-<!--  	magna aliquam erat volutpat. Ut wisi enim ad minim veniam,-->
-<!--  	quis nostrud exerci tation ullamcorper suscipit lobortis nisl-->
-<!--  	ut aliquip ex ea commodo consequat. Duis autem vel eum iriure-->
-<!--  	dolor in hendrerit in vulputate velit esse molestie consequat,-->
-<!--  	vel illum dolore eu feugiat nulla facilisis at vero eros et-->
-<!--  	accumsan et iusto odio dignissim qui blandit praesent luptatum</p>-->
-    <!--<a href="#">
-  	
-    <!--<a href="#">
+ <style> 
     
     
     
-    <!--<a href="#">About</a>-->
-    <!--<a href="#">Services</a>-->
-    <!--<a href="#">Clients</a>-->
-    <!--<a href="#">Contact</a>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<h2>Country Context</h2>-->
-<!--<p>Click on the element below to open the fullscreen overlay navigation menu.</p>-->
-<!--<p>In this example, the navigation menu will slide downwards from the top:</p>-->
-<!--<span class = "overlaytest" style="font-size:10px;cursor:pointer" onclick="openNav()">&#9776; Learn more about context</span>-->
-
-<!--<script>-->
-<!--function openNav() {-->
-<!--    document.getElementById("myNav").style.width = "100%";-->
-<!--}-->
-
-<!--function closeNav() {-->
-<!--    document.getElementById("myNav").style.width = "0%";-->
-<!--}-->
-<!--</script>-->
-  	
-  	<!--END OVERAY TEST-->
-  	
-  	
- <!--<div class = "container" id = "stickyheader">-->
- <!--     <div class = "row" id = "intropagerow">-->
- <!--       <div class="col-1">Overview</div>-->
- <!--       <div class="col-1">Details</div>-->
- <!--       <div class="col-1">Context</div>-->
- <!--     </div>-->
- <!--     </div>-->
+       body{
+      font-family: 'Alegreya Sans', sans-serif;
+      		  		    max-width: 100%;
+      		  		    
+      background-color: #f4f8ff;
       
-      
- <!--<div class = "container" id = "intropage">-->
- <!--     <div class = "row" id = "intropagerow">-->
- <!--       <div class="col-12">How do Ghana, Burkina Faso and Tanzania represent larger income inequality trends in Sub Saharan Africa?</div>-->
- <!--       <div class="col-4">Burkina faso represens a Upward trend</div>-->
- <!--       <div class="col-4">Ghana Represents a downward trend</div>-->
- <!--       <div class="col-4">Tanzania represents a u-shaped trend</div>-->
+        -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 
- <!--     </div>-->
- <!--     </div>    -->
-      
-      
-      
-    <div class = "container" id = "mainTitle">
-      <div class = "row" id = "maintitlerow">
-        <div class="col-12">Income Quintiles in Ghana, Burkina Faso and Tanzania</div>
-      </div>
-      </div>
-    <!--<span>TEXT</span>-->
-  	<!--<div class="chart"></div>-->
 
-    <script src="./workingscript.js" type="text/javascript"></script>
- 
- <!-- <div class = "lineDiv">  </div>-->
+    }
+    
+    button:focus {
+    outline:none;
+}
+    
+ button{
+     font-weight: 200;
+ }
+    /* Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    /*font-size: 16px;*/
+    border: none;
+    cursor: pointer;
+}
 
- <!--<div class = "container" id = "mainTitle">-->
- <!--     <div class = "row" id = "maintitlerow">-->
- <!--       <div class="col-12">Context: What factors explain income distribution in Ghana, Burkina Faso and Tanzania?</div>-->
- <!--       <div class="col-4">Factors that improve equality</div>-->
- <!--       <div class="col-4">Neutral impact on equity</div>-->
- <!--       <div class="col-4">Factors that increase inequality</div>-->
- <!--     </div>-->
- <!--     </div>       	-->
-        	
- <div class = "lineDiv">  </div>
- 
-  <div class = "container" id = "footerinfo">
-      <div class = "row" id = "maintitlerow">
-        <div class="col-12">
-        	
-<p></p>       
-<p></p>     
-<p></p><span class = 'staticTitle'>Abstract:</span></p>
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
 
-<p>This visualization focuses on income quintile trends in Ghana, Burkina Faso and Tanzania. These countries were chosen to represent three different types of inequality trends on the African continent: Ghana shows rising inequality, Burkina Faso falling, and Tanzania an inverted u-shaped ∩ inequality trend.
-</p>
-<p>
-Income quintiles are illustrated by two charts: a stacked bar chart to represent change in proportion of each country’s total income, and a positive/negative bar chart to illustrate percentage change. Text is generated from the data as the user interacts with the graphs.
-</p>
+}
 
-<p>The World Development Indicators data used for this visualization is incomplete, so starting and ending years are different for each country. This created a challenge when trying to design a comparative visualization.
-</p>
-<p>This was coded in D3.js by Rye Zupancis with the incorporation of Mike Bostock’s templates listed below.
-</p>
-<p></p><span class = "staticTitle">Sources:</span></p>
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    font-size: 12px;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
 
-Odusola, Ayodele, Radhika Lal, Rogers Dhliwayo, Isiyaka Sabo, and James Neuhaus. "Country context matters in promoting equity: Drivers of inequality are heterogeneous in Burkina Faso, Ghana and Tanzania." Income Inequality Trends in sub-Saharan Africa: Divergence, Determinants, and Consequences, 2017.
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
-“World Development Indicators Data Bank.” http://databank.worldbank.org/data/reports.aspx?source=world-development-indicators
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
 
-Mike Bostock. "Stacked Area Chart." https://bl.ocks.org/mbostock/3885211
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
-Mike Bostock. "Bar Chart With Negative Values." https://bl.ocks.org/mbostock/79a82f4b9bffb69d89ae        	
-        	
-        	
-        	
-        	</div>
-</div>
-      <!--  <div class="col-4">rdsfdf</div>-->
-      <!--  <div class="col-4">2</div>-->
-      </div>
-    </div>
-  </body>
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
 
-  
-    <style> 
     
     body{
       font-family: 'Alegreya Sans', sans-serif;
@@ -343,6 +277,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 		  /*color: #707070;*/
 		}
 		
+		.tempTitle {
+	        color: #a5acb7;
+	        visibility: hidden;
+	    }
+		
 		.container{
 		  /*border-bottom: #c9d1dd solid 1px;*/
 		}
@@ -362,4 +301,86 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     
 
     </style>
+
+</head>
+  <body>
+  	
+  	
+ 
+      
+      
+    <div class = "container" id = "mainTitle">
+      <div class = "row" id = "maintitlerow">
+        <div class="col-12">How have income categories changed in 
+        
+                <div class="dropdown">
+  <button class="">Burkina Faso, Ghana and Tanzania</button>?
+  <div class="dropdown-content">
+    <a href="allcountries.html">Sub-Saharan Africa</a>
+  </div>
+            
+            
+            
+            
+        </div>
+      </div>
+
+    <script src="./script.js" type="text/javascript"></script>
+        
+        
+        
+        
+        
+        
+        
+        
+        </div>
+      </div>
+      </div>
+
+
+ 
+
+ <div class = "lineDiv">  </div>
+ 
+  <div class = "container" id = "footerinfo">
+      <div class = "row" id = "maintitlerow">
+        <div class="col-12">
+        	
+<p></p>       
+<p></p>     
+<p></p><span class = 'staticTitle'>Abstract:</span></p>
+
+<p>This visualization focuses on income quintile trends in Ghana, Burkina Faso and Tanzania. These countries were chosen to represent three different types of inequality trends on the African continent: Ghana shows rising inequality, Burkina Faso falling, and Tanzania an inverted u-shaped ∩ inequality trend.
+</p>
+<p>
+Income quintiles are illustrated by two charts: a stacked bar chart to represent change in proportion of each country’s total income, and a positive/negative bar chart to illustrate percentage change. Text is generated from the data as the user interacts with the graphs.
+</p>
+
+<p>The World Development Indicators data used for this visualization are incomplete, so starting and ending years are different for each country. This created a challenge when trying to design a comparative visualization.
+</p>
+<p>This was coded in D3.js by Rye Zupancis with the incorporation of Mike Bostock’s templates listed below.
+</p>
+<p></p><span class = "staticTitle">Sources:</span></p>
+
+Odusola, Ayodele, Radhika Lal, Rogers Dhliwayo, Isiyaka Sabo, and James Neuhaus. "Country context matters in promoting equity: Drivers of inequality are heterogeneous in Burkina Faso, Ghana and Tanzania." Income Inequality Trends in sub-Saharan Africa: Divergence, Determinants, and Consequences, 2017.
+
+“World Development Indicators Data Bank.” http://databank.worldbank.org/data/reports.aspx?source=world-development-indicators
+
+Mike Bostock. "Stacked Area Chart." https://bl.ocks.org/mbostock/3885211
+
+Mike Bostock. "Bar Chart With Negative Values." https://bl.ocks.org/mbostock/79a82f4b9bffb69d89ae        	
+        	
+        	
+        	
+        	</div>
+</div>
+      <!--  <div class="col-4">rdsfdf</div>-->
+      <!--  <div class="col-4">2</div>-->
+      </div>
+    </div>
+  </body>
+
+  
+   
 </html>
