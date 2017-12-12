@@ -356,14 +356,14 @@ var tempTitle = togglingTitle
                 .attr("class","tempTitle")
                 .text(function(d){ 
                     
-                    // if (d.Country_Name == "Ghana"){
-                    //     return "Ghana represents countries that follow a downward equality trend."
+                    if (d.Country_Name == "Ghana"){
+                        return "Ghana represents countries that follow a downward equality trend."
                         
-                    // } else if (d.Country_Name == "Burkina_Faso"){
-                    //     return "Burkina Faso represents countries that follow an increasing equality trend."
-                    // } else if (d.Country_Name == "Tanzania"){
-                    //     return "Tanzania represents a u-shaped equality trend."
-                    // }
+                    } else if (d.Country_Name == "Burkina_Faso"){
+                        return "Burkina Faso represents countries that follow an increasing equality trend."
+                    } else if (d.Country_Name == "Tanzania"){
+                        return "Tanzania represents a u-shaped equality trend."
+                    }
                     
                     
                 })

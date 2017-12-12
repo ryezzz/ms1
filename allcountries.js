@@ -293,7 +293,7 @@ countriesFullObject.sort(function(obj2, obj1) {
     		       d3.select( "#"+ d.Category+d.Country+d.StartingYear)
     		                    .attr("fill", "#000000")
     		                    
-    		                    .attr("font-size", 300)
+    		                    .attr("font-size", 30)
 
                     div.transition()		
                         .duration(200)		
