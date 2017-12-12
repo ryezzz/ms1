@@ -2,7 +2,8 @@
 
 _Created by Rye Zupancis for the United Nations Development Programme_
 
-[![screen shot 2017-11-28 at 12 47 26 pm](https://user-images.githubusercontent.com/15457713/33581707-dddeeeea-d91f-11e7-9e05-adc19c81d0b1.png)](https://ryezzz.github.io/ms1/)
+
+[![screen shot 2017-11-28 at 12 47 26 pm](https://user-images.githubusercontent.com/15457713/33902155-1f12da66-df42-11e7-8fb9-429b1c761547.jpg)](https://ryezzz.github.io/ms1/)
 
 **Abstract:**
 
