@@ -1,9 +1,9 @@
-# Income Quintiles in Ghana, Burkina Faso and Tanzania
+# How have income categories changed in Sub-Saharan Africa?
 
 _Created by Rye Zupancis for the United Nations Development Programme_
 
 
-[![screen shot 2017-11-28 at 12 47 26 pm](https://user-images.githubusercontent.com/15457713/33902155-1f12da66-df42-11e7-8fb9-429b1c761547.jpg)](https://ryezzz.github.io/ms1/)
+[![screen shot 2017-11-28 at 12 47 26 pm](https://user-images.githubusercontent.com/15457713/33904766-8bc8fe58-df4a-11e7-981e-4694cb36d511.jpg)](https://ryezzz.github.io/ms1/)
 
 **Abstract:**
 
