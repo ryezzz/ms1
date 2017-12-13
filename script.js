@@ -1,24 +1,31 @@
-var bootstrapClass = 'col-lg-4 col-sm-12'
+var bootstrapClass = 'col-12'
 
-var container = d3.select("body")
-               .append("div")
-               .attr('class', 'container')
-               .attr('id', 'countryContainer')
+var container = d3.select("#countryContainer")
+            //   .append("div")
+            //   .attr('class', 'container')
+            //   .attr('id', 'countryContainer')
                
 var key = container
           .append('div')
+          
+var togglingTitleFontSize = '2vw';
 
+var allcountries = []
 
+var countriescheckforrepeat = [];
+        var countriesNotRepeated = [];
+        
+        
 var togglingTitleFontSize = '1.5vw';
 
-var margin = {top: 10, right: 0, bottom: 14, left: 0},
-    width = window.innerWidth/3.5- margin.left - margin.right,
-    height = window.innerHeight/4- margin.top - margin.bottom;
+var margin = {top: 40, right: 0, bottom: 14, left: 0},
+    width = window.innerWidth/1- margin.left - margin.right,
+    height = window.innerHeight+2000- margin.top - margin.bottom;
     
 
-if(window.innerWidth<500){
-    width = window.innerWidth/1.2
-}  
+// if(window.innerWidth<500){
+//     width = window.innerWidth/1.2
+// }  
 
 var unParsedData =[];
         
@@ -49,11 +56,12 @@ var objectKeys = [];
 // Where I put my key value pairs of colors
 var objectColors = []
 
-
+function myFunction(){
+    console.log('change')
+}
 //Start overlay
 
 //End overlay
-
 
 
     
@@ -61,454 +69,410 @@ var objectColors = []
     
         
 function render(data, i){
-        // console.log(data);
-        
-        //   data.Time = parseDate(data.Time);
-
-    var allChangeArr = [];
-
-        // Sort single country change from most cange to least change (postive and negative combined)
-    objectKeys = objectKeys.sort(); // ['apples', 'bananas', 'cherries']
-
-        
-        
-    var countryName = data[0]
-                    .Country_Name;
-   
-
-                       
     
-    var chartDiv = d3.select('body')
-                 .append('div')
-                 .attr('id', 'chartDiv'+ countryName)
-                 .attr('class', 'chartDiv');;
     
-     var titleDiv =  container
-                    .append('div')
-                    .attr('class', 'row')
-                    
-                    // .append('svg').attr('class', 'title')
-                    // .attr("width", window.innerWidth)
-                    // .attr('height', 30)
-                    
-                    
-     var chartsRow = container
-                    .append('div')
-                    .attr('class', 'row')
-                    
- function parseClass(objectkey){ 
+    
+    function parseClass(objectkey){
      return objectkey.replace('aIncome', "Income")
                  .replace('bIncome', "Income")
                  .replace('cIncome', "Income")
                  .replace('dIncome', "Income")
                  .replace('eIncome', "Income")
-                 .replace('twenty', " quintile of the population ")
-                 .replace('by', " by the ")
-                 .replace(/_/g, ' ')}    		    	
-        
-    var togglingTitle =  chartsRow
-                            .append('div')
-                            .attr('class', bootstrapClass)
-                            .attr('id', "togglingTitle")
-    // Make min and max of years
-    var years = []
-
-    for(var i=0; i<data.length; i++){
-        years.push(data[i].Time)
-    }
-
-    var svgStacked = chartsRow
-                    .append('div')
-                    .attr('class', bootstrapClass)
-                    .append('svg')
-                    .attr('id', "svg" + countryName + "AreaChart")
-                    .attr('width', width).attr('height', window.innerHeight/3.9),
-                    
-        marginStacked = {top: 20, right: 25, bottom: 30, left: 35},
-        
-        widthStacked = svgStacked.attr("width") - marginStacked.left - marginStacked.right,
-        
-        heightStacked = svgStacked.attr("height") - marginStacked.top - marginStacked.bottom;
-
-  
-  
-
-    var xStacked = d3.scaleLinear().range([0, widthStacked]),
-        yStacked = d3.scaleLinear().range([heightStacked, 0]);
-    // zStacked = d3.scaleOrdinal(d3.schemeCategory10);
-
-    var stack = d3.stack();
-
-    var area = d3.area()
-        .x(function(d, i) { return xStacked(d.data.Time); })
-        .y0(function(d) { return yStacked(d[1]); })
-        .y1(function(d) { return yStacked(d[0]); });
-
-    var gStacked = d3.select("#svg"+countryName+ "AreaChart")
-                .append("g")
-                .attr("transform", "translate(" + marginStacked.left + "," + marginStacked.top + ")");
+                 .replace('twenty', "quintile of the population ")
+                 .replace('by', "by the")
+                 .replace(/_/g, ' ')}
+                 
+                 
+                 
+                 
+    
+      objectColors.sort(function(b, a) {
+  var nameA = a.Category.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.Category.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
     
     
+
+  // names must be equal
+  return 0;
+});
+    // objectColors = objectColors.sort()
+     
+            
+            
     
-    xStacked.domain(d3.extent(data, function(d) { return d.Time; }));
-    z.domain(objectKeys);
-    stack.keys(objectKeys);
-
-    var layer = gStacked.selectAll(".layer")
-              .data(stack(data))
-              .enter().append("g")
-              .attr("class", "layer")
-
-
-    layer.append("path")
-      .attr("class", function(d,i){
-          return objectKeys[i]
-      })
-      .style("fill", function(d) { return z(d); })
-
-      .style("stroke",function(d) { return z(d); })
-      .attr("d", area)
+    
 
       
-     layer.filter(function(d) { return d[d.length - 1][1] - d[d.length - 1][0] > 0.01; })
-    .append("text")
-      .attr('class', 'innerText')
-      .attr("x", widthStacked - 6)
-      .attr("y", function(d) { return yStacked((d[d.length - 1][0] + d[d.length - 1][1]) / 2); })
-      .attr("dy", ".35em")
-      .style("text-anchor", "end")
-      .style("fill", "white")
-      .style("opacity", ".5")
-      .text(function(d,i) { var parsed = parseClass(objectKeys[i])
-          
-          return parsed.replace("Income share held", " ").replace("by the", "") ; })
+    var chartDiv = d3.select('body')
+     .append('div')
+     .attr('id', 'FullCountryChart')
+     .attr('class', 'chartDiv');
+     
 
-     //CREATE CHANGE ARRAY FOR BAR CHART AND TEXT 
-    var singleCountryChange = [];
-        
-    var countryClass = data[0].Country_Name
-    
-        
-    ////takes year value of data and tests if it's greater than or less than previous year. 
-    function posOrNegChange (input){
-         if (data[0][input] <= data[data.length-1][input]){
-         return 100-data[0][input]/data[data.length-1][input]*100
-         } else { return (100-data[data.length-1][input]/data[0][input]*100)*-1
-         }
-    }
-        
-        
-        //making an object for cange in each category of income for each country between two Pushing to 1. country array 2. complete array
-    objectKeys.forEach(function(d){
-         
-        var changeObj = new Object();
-        changeObj.Country = data[0].Country_Name;
-        changeObj.Category = d;
-        changeObj.startYear = d3.min(years);
-        changeObj.endYear = d3.max(years);
-        changeObj.Change = posOrNegChange(d)
-        singleCountryChange.push(changeObj)
-        allChangeArr.push(changeObj)
-    });
-
-    
-///////END CREATE CHANGE ARRAY
-
-    var format = d3.format(".1f");
+     
+     
 
 
-// //every year for every piece of data with value gets a tick
+         var chartsRow = d3.select("#countryRow")
+                    // .append('div')
+                    // .attr('class', 'row')
+                    // .attr('id', '#countryRow')
 
-    gStacked.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + heightStacked + ")")
-    //   .call(d3.axisBottom(xStacked).ticks(data.length).tickValues(years));
-         .call(d3.axisBottom(xStacked).ticks(data.length).tickFormat(d3.format("d")).tickValues([years[0], (years[0]+d3.max(years))/2 , d3.max(years)]));
 
-    //   .call(d3.axisBottom(xStacked).ticks(3).tickValues(years));
-    gStacked.append("g")
-      .attr("class", "axis axis--y")
-      .call(d3.axisLeft(yStacked).ticks(2, "%"));
- 
+        // var togglingTitle =  chartsRow
+        //                     .append('div')
+        //                     .attr('class', bootstrapClass)
+        //                     .attr('id', "togglingTitle")
 
-///////////////END STACKED AREA CHART SVG CREATE///////////////////
-        
-    var svg = chartsRow
+
+                // .attr("class", "tooltip")				
+                // .style("opacity", 0);
+              
+//one overall svg for everything    
+        var svgContainer = 
+                chartsRow
               .append('div')
               .attr('class',bootstrapClass)
+              
+              
+         var tool = d3.select("body")
+             .append('div')
+            .attr('class', 'tool')
+    //  .attr('class', 'chartDiv');       
+      var div = d3.selectAll(".tool")
+
+              
+           var svg = svgContainer //   d3.select("#countryContainer")
               .append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
+              .attr("width", width )
+              .attr("height", height)
               .attr("class", 'barChartSVG')
               .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
+              .attr("width", width)
+              
+              svg.append('rect')
+              .attr("width", width)
+              .attr("height", width)
 
 //adding mini chart titles
          svg
         .append("text")      // text label for the x axis
         .attr("class", "miniTitles")
-        .attr("x", width/2 )
-        .attr("y", 5)
+        .attr("x", width/4 )
+        .attr("y", -10)
         .style("text-anchor", "middle")
-        .html("Neg. Change  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  Pos. Change" );
+        // .html("+" );
         
-         svgStacked
-        .append("text")// text label for the x axis
+            svg
+        .append("text")      // text label for the x axis
+        .attr("class", "miniTitles")
+        .attr("x", width/1.3)
+        .attr("y", -10)
+        .style("text-anchor", "middle")
+        // .html("-" );
+        
+          svg
+        .append("text")      // text label for the x axis
         .attr("class", "miniTitles")
         .attr("x", width/2 )
-        .attr("y", 13 )
+        .attr("y", -10)
         .style("text-anchor", "middle")
-        .text("Income Shares" );
-// /////////////////////data cleaned, create Pos NEG Bar Chart///////////////////////////////////////
+        .html("Neg. Change" + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" +"Pos. Change" );
         
-    x.domain([-35, 35]);
-    y.domain(allChangeArr.map(function(d) { return d.Category; }));
-    
-    svg.selectAll(".bar")
-                .data(allChangeArr)
-                .enter()
-                
-                .append("rect")
-                .attr("class", function(d,i){
-                    classArrayForInteraction.push(objectKeys[i])
-                    return objectKeys[i]
-                    }) 
-                    
-                .attr('x', '0')
+        
+        
+            svg
+        .append("text")      // text label for the x axis
+        .attr("class", "miniTitles")
+        .attr("id", "leastChange")
+        .attr("x", width/2 )
+        .attr("y", height/3.5)
+        .style("text-anchor", "middle")
+        .html("Least Change" );
+  
+  
+  
+    // var keyContainer = d3.select('#mainTitleRow')
+    //                         .append('div')
+    //                         .attr('class', 'col-2')
+    //                         .append('svg')
+    //                         .attr('width', 100)
+    //                         .attr('height', 100)
+    //                         .append('g')
+    //                         .attr('class', 'container')
+    //         var keys = keyContainer.selectAll('rect')
+    //                 .data(objectColors)
+    //                 .enter()
+    //                 .append('rect')
+    //                 .attr("x", 10)
+    //                 .attr("y", function(d,i){return i*20})
+    //                 .attr('width', 100)
+    //                 .attr('height', 20)
+    //                 .attr('class', 'key')
+    //              .attr('fill', function(d) { return d.color})
+                 
+    //           var yforkey = d3.scaleLinear().range([0, 100]);
 
+    //                  var arr = [20,40,60,80,100]
+    //                 keyContainer
+    //                 .selectAll('.keyText')
+    //                 .data(objectColors)
+    //                 .enter()
+    //                 .append('text')
+    //                 .attr('class', 'keyText')
+    //                 .style('fill', 'white')
+    //                 .style('opacity', .7)
+    //                 .attr('x',15)
+    //                 .attr('y', function(d,i){return arr[i]-5})
+    //                 .text(function(d){return parseClass(d.Category).replace("Income share held by the ","").replace("of the population ","")})
+            
+    
+    
+    
+
+        // console.log(data[0]);
+        // console.log(allcountries)
+var countriesFullObject = [];
+        
+        ///Yey! This javascript method prevents repetition
+                var listofuniquecountries = Array.from(new Set(countriesNotRepeated))
+                console.log(listofuniquecountries)
+                
+                //start adding elements to my single country objects. I want Country, Start year/end year, change.
+                
+                objectKeys.forEach(function(overallLoop) {
+                    
+                       
+                        listofuniquecountries.forEach(function(d){
+                            var singleCountryObject = new Object();
+                            singleCountryObject.Country = d;
+                            singleCountryObject.Category = overallLoop;
+        
+                            
+                            // {quintile change array:  country, quintile, max year, min year, change;; [years]},{[years]},{[years]}
+                            
+                                            //gather the years of each country and stick the min and max in object
+                                                    var eachCountryYears = []
+                            
+                                             data.forEach(function(alldata){
+                                                if(alldata.Country_Name == d){  
+                                                    eachCountryYears.push(alldata.Time)
+                                                }
+                                             });
+                                            singleCountryObject.StartingYear = d3.min(eachCountryYears)
+                                            singleCountryObject.MiddleYear = d3.median(eachCountryYears)
+                                            singleCountryObject.EndingYear = d3.max(eachCountryYears)
+                                            
+                                            
+                                            
+                                            
+                                            data.forEach(function(alldata){
+                                                var valuesChange = [];
+                                                
+                                                
+                                                if(alldata.Time == singleCountryObject.EndingYear && singleCountryObject.Country == alldata.Country_Name){  
+                                                    
+                                                    singleCountryObject.EndingYearValue = alldata[overallLoop]
+                                                    
+                                                    valuesChange.push(alldata[overallLoop])
+                                                    
+                                                    
+                                                    
+                                                } else if (alldata.Time == singleCountryObject.StartingYear && singleCountryObject.Country == alldata.Country_Name){  
+        
+                                                    singleCountryObject.StartingYearValue = alldata[overallLoop]
+                                                    valuesChange.push(alldata[overallLoop])
+            
+                                                }
+                                                
+                                            //  console.log(valuesChange)
+                                             });
+                                             
+                                             
+                                             
+                                               function posOrNegChange (startyearvalueinput,endyearvalueinput){
+                                                if (startyearvalueinput <= endyearvalueinput){
+                                                  return 100-startyearvalueinput/endyearvalueinput*100
+                                                  } else { return (100-endyearvalueinput/startyearvalueinput*100)*-1
+                                                  }
+                                                }
+                
+                                             
+                                             
+                                            //  console.log(singleCountryObject.EndingYearValue)
+                                            //  console.log(singleCountryObject.StartingYearValue)
+                                             singleCountryObject.Change = posOrNegChange(singleCountryObject.StartingYearValue, singleCountryObject.EndingYearValue);
+                                            //  var startValue = 0
+                                            //  singleCountryObject.StartValue = startValue
+        
+                                            
+                                            //find all the values for all quintiles 
+                            
+                            //pushes object into array
+                            
+                            if(singleCountryObject.Change){
+                           countriesFullObject.push(singleCountryObject)
+                            }
+                        });
+                        
+                        
+                })
+
+countriesFullObject.sort(function(obj2, obj1) {
+	// Ascending: first age less than the previous
+	return Math.abs(obj1.Change) - Math.abs(obj2.Change);
+});
+                console.log(countriesFullObject)
+                
+             x.domain([-100, 100]);
+             y.domain(countriesFullObject.map(function(d) { return d.Category; }));
+///This is where I start building my chart with modified data                
+//  countriesFullObject.forEach(function(allChangeInnerLoop){
+     
+         var format = d3.format(".1f");
+         
+        var rect = svg.selectAll(".anything")
+                .data(countriesFullObject)
+                .enter()
+                .append("rect")
+                .attr("class", "singleBar")
+                .attr("id", function(d){return d.Category+d.Country+d.StartingYear})
                 .attr("x", function(d){
-                    return d.Change < 0 ? x(d.Change) : x(0); 
+                    return d.Change < 0 ? x(d.Change) : x(0);
                     })
-                .transition().duration(300)
+    //             .transition().duration(300)
     			.attr("width", function(d){
     				return d.Change < 0 ? x(d.Change * -1) - x(0) : x(d.Change) - x(0);
     				})
-    				                    					 
 
-                .attr("y", function(d){ 
-                    return y(d.Category); 
+
+                .attr("y", function(d, i){
+                    return i*(height/700);
                     })
-    			.attr("height", y.bandwidth())
-    			.attr("fill", function(d) {  
+    			.attr("height", 1)
+    			.attr("fill", function(d) {
                         for(var i=0; i<objectColors.length; i++){
             		         if(d.Category === objectColors[i].Category){
             		            return objectColors[i].color ;
             		         }
-            			}    
+            			}
     		    	})
- function increasedDecreased(positiveneg){ 
+    		    
+  
+    		   .on("mouseover", function(d) {
+    		       
+    		       d3.select( "#"+ d.Category+d.Country+d.StartingYear)
+    		                    .attr("fill", "#000000")
+    		                    
+    		                    .attr("font-size", 30)
+                    div.attr("x", "0")
+                    div.transition()
+                        .duration(200)		
+                        .style("opacity", .9);		
+                    div	.html(function() {
+                         var thisText =  "<b>" + d.Country.replace('_', ' ') + " from " + d.StartingYear + " to " + d.EndingYear + ":" + "</b>" + "</br>"+ parseClass(d.Category) + increasedDecreased(d.Change) + "&nbspfrom " + format(d.StartingYearValue) + " to " + format(d.EndingYearValue) + " percent, " + "a " + format(d.Change) + " percent" +" change."
+                        return thisText;	
+
+                      })
+                      
+                      
+                      ////LEFT DEAL WITH LATER
+                        .style("left", (testMousepositionX(d3.event.pageX)) + "px")		
+                        .style("top", (testMouseposition(d3.event.pageY - 28)) + "px");	
+                        
+      
+                        
+                        
+                        
+                        //END MOUSEOUT
+                    })					
+                
+                .on("mouseout", function(d, i) {
+                d3.select( "#"+ d.Category+d.Country+d.StartingYear)
+                    		.attr("fill", function(d) {
+                        for(var i=0; i<objectColors.length; i++){
+            		         if(d.Category === objectColors[i].Category){
+            		            return objectColors[i].color ;
+            		         }
+            			}
+    		    	})
+
+                    div.transition()		
+                        .duration(500)		
+                        .style("opacity", 0);	
+                })
+    		    	
+    		    	//Test mouse position to avoid overlap
+      		    	function testMouseposition(mousepos){
+    		    	    if(mousepos<400){
+    		    	        return 400
+    		    	    } else { return mousepos }
+    		    	        
+    		    	    };
+    		    	
+    		    	
+    		    	//Test mouse position to avoid overlap
+      		    	function testMousepositionX(mousepos){
+    		    	    if(mousepos<width/2){
+    		    	        return 80
+    		    	    } else { return width-width/3.5 }
+    		    	        
+    		    	    };
+    		    	
+    		  //  	testMouseposition(d3.event)
+    		    	
+      
+
+      svg.on('mouseover', function(d){
+            d3.selectAll('.singleBar')
+                    .transition()
+                      .duration(500)
+
+                     .attr("y", function(d, i){
+                        return i*(height/170);
+                        }) 
+                            .delay(10)
+                        .transition()
+
+                        .duration(300)
+                        .attr('height', 15)
+                        
+            d3.select("#lineSide")
+                    .attr("x1", width/10 )
+                    .attr("y1", height-50)
+                   .attr("x2", width/10 )
+                    .attr("y2", 10)
+                    
+            d3.select("#leastChange")
+                 .attr("y", height-20)
+
+})
+
+
+
+
+
+function increasedDecreased(positiveneg){
      if(positiveneg<0){
          return "decreased"
      } else {return "increased"};
  }
- 
-  function increaseDecreaseEquality(increasedordecreased, category){
-     if (category == "something"){
-         return("a decrease in equality")
-     }
+
+
+
      
      
      
- }
- 
-////Interactivity			        
-togglingTitle
-      .selectAll ('text')
-      .data(allChangeArr)
-      .enter()
-      .append("text")
-      .attr('class', function(d, i){return classArrayForInteraction[i]+"text"})
-      .text(function(d){
-         return  countryName.replace('_', ' ') + " from " + d3.min(years) 
-      })
-      .html(function(d, i) {
-          var thisText = parseClass(objectKeys[i]) +"<span class = 'increasedDecreasedHighlight'>" + increasedDecreased(allChangeArr[i].Change*1) + "</span>" + "&nbspfrom " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change."
-          return thisText;
-      
-              
-                        // var thisText = "<span class = 'staticTitle'>" + countryName.replace('_', ' ') + " from " + d3.min(years) + " to " + d3.max(years) + "</span>" + "<span class ="+ "'" +classArrayForInteraction[i]+"text" + "'>"+ parseClass(objectKeys[i]) + increasedDecreased(allChangeArr[i].Change*1) + " from " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change." + "</span>" 
-    
-              
-              
-                    //   + " representing" + increaseDecreaseEquality(increasedDecreased(allChangeArr[i].Change*1) , objectKeys[i]);
-
-      })
-
-      .style("font-size", 0)
-      .style("fill", "red")
-
-// d3.selectAll('.increasedDecreasedHighlight')
-// .data(allChangeArr)
-// .style("background-color", function(d, j) {  
-//                         for(var i=0; i<objectColors.length; i++){
-//             		         if(d.Category === objectColors[i].Category){
-//             		            return objectColors[i].color ;
-//             		         }
-//             			}    
-//     		    	})
-// .attr("fill", "white")
-// .style("background-color", "red")
-console.log(allChangeArr[0])
-var tempTitle = togglingTitle
-                .data(data)
-                .append("text")
-                .attr("class","tempTitle")
-                .text(function(d){ 
-                    
-                    if (d.Country_Name == "Ghana"){
-                        return "Ghana represents countries that follow a downward equality trend."
-                        
-                    } else if (d.Country_Name == "Burkina_Faso"){
-                        return "Burkina Faso represents countries that follow an increasing equality trend."
-                    } else if (d.Country_Name == "Tanzania"){
-                        return "Tanzania represents a u-shaped equality trend."
-                    }
-                    
-                    
-                })
-                
-                .style("font-size", togglingTitleFontSize)
-                
-
-
-
-  	svg.selectAll(".change")
-					.data(allChangeArr)
-					.enter().append("text")
-					.attr("class", "change")
-					.attr("x", function(d){
-							if (d.Change < 0){
-								return (x(d.Change * -1) - x(0)) > 20 ? x(d.Change) + 2 : x(d.Change) - 1;
-							} else {
-								return (x(d.Change) - x(0)) > 20 ? x(d.Change) - 2 : x(d.Change) + 1;
-							}
-						 })
-						
-					 .attr("y", function(d){ return y(d.Category); })
-					 //change space inbetween bars
-					 .attr("dy", y.bandwidth() - 2.55)
-					 .attr("text-anchor", function(d){
-							if (d.Change < 0){
-								return (x(d.Change * -1) - x(0)) > 20 ? "start" : "end";
-							} else {
-								return (x(d.Change) - x(0)) > 20 ? "end" : "start";
-							}
-					    })
-					  .style("fill", function(d){
-							if (d.Change < 0){
-								return (x(d.Change * -1) - x(0)) > 20 ? "#fff" : "#3a403d";
-							} else {
-								return (x(d.Change) - x(0)) > 20 ? "#fff" : "#3a403d";
-							}
-						})
-						.attr("text-anchor", function(d){ if (d.Change<-3){return "beginning"}else{return "end"}})
-				        // .text(function(d){ return format(d.Change)+"%"; });
-					  .text(function(d){ return format(d.Change) + "%"; })
-					  .attr('class', 'innerText')
-					  .style("opacity", ".7")
-                       
-    
-                    
-                    svg.selectAll(".category")
-						.data(allChangeArr)
-					    .enter()
-					    .append("text")
-						.attr("class", "category")
-						.attr("x", function(d){ return d.Change < 0 ? x(0) + 2.55 : x(0) - 2.55 })
-						.attr("y", function(d){ return y(d.Category); })
-						//change height between bars
-						.attr("dy", y.bandwidth() - 2.55)
-						.attr("text-anchor", "end")
-				        // .text(function(d){ return format(d.Change)+"%"; });
-						
-						
-					svg.append("line")
-						.attr("x1", x(0))
-						.attr("x2", x(0))
-						.attr("y1", height/16)
-						.attr("y2", height/1.059)
-						.attr("stroke", "#c4c4c4")
-						.attr("stroke-width", "1px");
-///////////////////////Interactivity/////////////////////////////////////
-// console.log(unParsedData)
-///create main title content
-
-        // togglingTitle
-        // .append('text')
-        // .attr('class', 'staticTitle')
-        // .text(function(){return "Income quintile distribution in " + countryName.replace('_', ' ') + " from " + d3.min(years) + " to " + d3.max(years)})
-        // .attr('alignment-baseline','hanging')
-
-
-    function useClassForInteraction (){
-        
-       for(var i = 0; i < classArrayForInteraction.length; i++){
-           
-                 d3.selectAll('.'+ classArrayForInteraction[i])
-                 
-                 .on("mouseover", function(){
-                  //this returns change info for tanzania  
-                    //  for(var i =0; i<allChangeArr.length; i++){
-                    //      if(allChangeArr[i].Category==this.className.baseVal){
-  
-                    //          console.log(allChangeArr[i].Change)
-                    //      }
-                    //  }
-
-                     d3.select( "." + countryName + 'togglingTitle')
-                    
-                     .attr('alignment-baseline','hanging')
-
-                    for(var j = 0; j < classArrayForInteraction.length; j++){
-                            if(classArrayForInteraction[j] != this.className.baseVal){
-                            d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "hidden")
-                            // d3.selectAll('.'+"staticTitle").style("visibility", "hidden")
-; 
-                            d3.selectAll('.'+classArrayForInteraction[j]).transition()
-                            .duration(200).style('opacity', 0.1 )
-                            // .text("hello")
-                            } else { d3.selectAll('.'+classArrayForInteraction[j]+"text").style("visibility", "visible") .style("font-size", togglingTitleFontSize);
-                                
-                                d3.selectAll('.'+"tempTitle").transition().style("visibility", "hidden")
-                                
-                            } 
-                     }
-                     
-                     
-                     
-        })
-                .on("mouseout", function(){ 
-                    d3.selectAll('svg')
-                    // .selectAll("text").remove();
-                    for(var j = 0; j < classArrayForInteraction.length; j++){
-                        d3.selectAll('.'+classArrayForInteraction[j]+"text").style("font-size", 0)
-                         d3.selectAll('.'+classArrayForInteraction[j]).style("font-size", 0)
-                         d3.selectAll('.'+"tempTitle").style("visibility", "visible")
-                         
-                            d3.selectAll('.'+classArrayForInteraction[j])
-                            .transition()
-                            .duration(200)
-                            .style('opacity', 1)
-                     }
-
-                 })
-                     
-
-
-        }
-
-    };
-    //Income quintile distribution 
-    useClassForInteraction()
-    
-    titleDiv
-        .append('div')
-        .attr('class', bootstrapClass)
-        .append('text')
-        .attr('class', 'staticTitle')
-        .text(function(){return countryName.replace('_', ' ') + " from " + d3.min(years) + " to " + d3.max(years)})
-        .attr('alignment-baseline','hanging')
+    console.log(objectColors)    
+console.log("hello")        
+//  });    
         
     }
     
@@ -520,12 +484,14 @@ var tempTitle = togglingTitle
 
     //LAYER INTERACTIVITY
     d3.csv ("data/wdialldata.csv", type, function(error, data){
+        
             // if (error) console.log(error);
         data.forEach(function(d){
-            
+        d.Country_Name = d.Country_Name.replace(" ", "_")    
         d.Time = +d.Time
-        d.Country_Name =d.Country_Name.replace(" ", "_")
+            // console.log(d.Country_Name)
            
+        // console.log(d.Time)
     
         });
             
@@ -534,6 +500,9 @@ var tempTitle = togglingTitle
         var country2 = []
         var country3 = []
          
+
+
+
 
          //Create object Keys so I can send each numeric key through program
          
@@ -564,43 +533,57 @@ var tempTitle = togglingTitle
  
          // End Create Object Keys
          
+                   console.log(objectKeys)
+
+         
+         var cleaned = [];
          
         data.forEach(function(d){
             
-        if (d.Country_Name == "Ghana" && d[objectKeys[3]]*1){
-                country1.push(d)
-                } else if (d.Country_Name == "Burkina_Faso"  && d[objectKeys[3]]*1){
-                country2.push(d)
-                } else if (d.Country_Name == "Tanzania"  && d[objectKeys[3]]*1){
-                country3.push(d)
-                }
+            
+            
+        // var countriescheckforrepeat = [];
+        // var countriesNotRepeated = [];
+        
+        
+        
+        
+
+      for( var i = 0; i<objectKeys.length; i++){ 
+    
+    //I'm only analyzing data with full year values for all quintiles
+    //I'm putting all country names in one place
+          if (d[objectKeys[i]]*1){
+            cleaned.push(d);
+            countriesNotRepeated.push(d.Country_Name)
+          }
+          
+          
+        //   d.Country_Name[i]
+          
+          
+            }
+
+        countriescheckforrepeat.push(cleaned.Country_Name)
+        
+
+     
             });  
             
-         var keyContainer = d3.select('body')
-                            .append('div')
-                            .append('svg')
-                            .append('g')
-                            .attr('class', 'container')
-                            .attr('width', 100)
-          .attr('height', 50)
+            // console.log(cleaned)
             
-            var keys = keyContainer.selectAll('rect')
-                    .data(objectColors)
-                    .enter()
-                    .append('rect')
-                    .attr("x", function(d,i){return i*20})
-                    .attr("y", 10)
-                    .attr('width', 10)
-                    .attr('height', 10)
-                    .attr('class', 'key')
-            // .append('rect')
-            .attr('fill', function(d) { return d.color})
+      
+         
+         
+                
+         
+         
+         
             
-            console.log(objectColors)
-            
-        render(country2)
-        render(country1)
-        render(country3)
+
+        render(cleaned)
+        // render(country1)
+        // render(country3)
        
        
     
@@ -614,16 +597,27 @@ var tempTitle = togglingTitle
     //       .on("mouseover", function(d,i){classArrayForInteraction[i].style("fill", "#000000");})
     });
     
+    
+    // console.log(countriescheckforrepeat)
+
+    
+    
     function type(d, i, columns) {
-                     unParsedData.push(d)
+                    //  unParsedData.push(d)
 
   //This turns the year and stuff into integers
 //   d.Time = parseDate(d.Time);
-  for (var i = 2, n = columns.length; i < n; ++i) d[columns[i]] = d[columns[i]]/100;
+//   for (var i = 2, n = columns.length; i < n; ++i) d[columns[i]] = d[columns[i]]/100;
   return d;
 }    
     
     
+     
+
+
+
+
+
 
     
 
