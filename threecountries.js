@@ -124,7 +124,7 @@ function render(data, i){
                     .attr('id', "svg" + countryName + "AreaChart")
                     .attr('width', width).attr('height', window.innerHeight/3.9),
                     
-        marginStacked = {top: 20, right: 25, bottom: 30, left: 35},
+        marginStacked = {top: 20, right: 25, bottom: 30, left: 40},
         
         widthStacked = svgStacked.attr("width") - marginStacked.left - marginStacked.right,
         
@@ -219,11 +219,24 @@ function render(data, i){
 
 // //every year for every piece of data with value gets a tick
 
+function yearsCheck(years){
+    var yearsNew = []
+    for(var i =0; i<years.length; i++){
+    if (years[i]*1!=1988){
+        return years
+        yearsNew.push(years[i])
+    }
+    }
+    
+    return yearsNew
+}
+
+
     gStacked.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + heightStacked + ")")
     //   .call(d3.axisBottom(xStacked).ticks(data.length).tickValues(years));
-         .call(d3.axisBottom(xStacked).ticks(data.length).tickFormat(d3.format("d")).tickValues([years[0], (years[0]+d3.max(years))/2 , d3.max(years)]));
+         .call(d3.axisBottom(xStacked).ticks(4).tickFormat(d3.format("d")).tickValues([d3.max(years), (d3.max(years)+d3.min(years))/2, d3.min(years)]));
 
     //   .call(d3.axisBottom(xStacked).ticks(3).tickValues(years));
     gStacked.append("g")
@@ -323,7 +336,7 @@ togglingTitle
          return  countryName.replace('_', ' ') + " from " + d3.min(years) 
       })
       .html(function(d, i) {
-          var thisText = parseClass(objectKeys[i]) +"<span class = 'increasedDecreasedHighlight'>" + increasedDecreased(allChangeArr[i].Change*1) + "</span>" + "&nbspfrom " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a " + format(allChangeArr[i].Change) + " percent" +" change."
+          var thisText = parseClass(objectKeys[i]) +"<span class = 'increasedDecreasedHighlight'>" + increasedDecreased(allChangeArr[i].Change*1) + "</span>" + "&nbspfrom " + format(data[0][objectKeys[i]]*100) + " to " + format(data[years.length-1][objectKeys[i]]*100) + " percent" + ", a change of " + format(allChangeArr[i].Change) + " percent."
           return thisText;
       
               
@@ -576,25 +589,25 @@ var tempTitle = togglingTitle
                 }
             });  
             
-         var keyContainer = d3.select('body')
-                            .append('div')
-                            .append('svg')
-                            .append('g')
-                            .attr('class', 'container')
-                            .attr('width', 100)
-          .attr('height', 50)
+        //  var keyContainer = d3.select('body')
+        //                     .append('div')
+        //                     .append('svg')
+        //                     .append('g')
+        //                     .attr('class', 'container')
+        //                     .attr('width', 100)
+        //   .attr('height', 50)
             
-            var keys = keyContainer.selectAll('rect')
-                    .data(objectColors)
-                    .enter()
-                    .append('rect')
-                    .attr("x", function(d,i){return i*20})
-                    .attr("y", 10)
-                    .attr('width', 10)
-                    .attr('height', 10)
-                    .attr('class', 'key')
-            // .append('rect')
-            .attr('fill', function(d) { return d.color})
+        //     var keys = keyContainer.selectAll('rect')
+        //             .data(objectColors)
+        //             .enter()
+        //             .append('rect')
+        //             .attr("x", function(d,i){return i*20})
+        //             .attr("y", 10)
+        //             .attr('width', 10)
+        //             .attr('height', 10)
+        //             .attr('class', 'key')
+        //     // .append('rect')
+        //     .attr('fill', function(d) { return d.color})
             
             console.log(objectColors)
             

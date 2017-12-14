@@ -18,8 +18,8 @@ var countriescheckforrepeat = [];
         
 var togglingTitleFontSize = '1.5vw';
 
-var margin = {top: 40, right: 0, bottom: 14, left: 0},
-    width = window.innerWidth/1- margin.left - margin.right,
+var margin = {top: 40, right:0 , bottom: 14, left: 0},
+    width = window.innerWidth- margin.left - margin.right,
     height = window.innerHeight+2000- margin.top - margin.bottom;
     
 
@@ -193,45 +193,49 @@ function render(data, i){
         .attr("class", "miniTitles")
         .attr("id", "leastChange")
         .attr("x", width/2 )
-        .attr("y", height/3.5)
+        .attr("y", height/4)
         .style("text-anchor", "middle")
         .html("Least Change" );
   
   
   
-    // var keyContainer = d3.select('#mainTitleRow')
-    //                         .append('div')
-    //                         .attr('class', 'col-2')
-    //                         .append('svg')
-    //                         .attr('width', 100)
-    //                         .attr('height', 100)
-    //                         .append('g')
-    //                         .attr('class', 'container')
-    //         var keys = keyContainer.selectAll('rect')
-    //                 .data(objectColors)
-    //                 .enter()
-    //                 .append('rect')
-    //                 .attr("x", 10)
-    //                 .attr("y", function(d,i){return i*20})
-    //                 .attr('width', 100)
-    //                 .attr('height', 20)
-    //                 .attr('class', 'key')
-    //              .attr('fill', function(d) { return d.color})
+    var keyContainer = d3.select('#mainTitleRow')
+                            .append('div')
+                            .attr('class', 'legend')
+                            .append('svg')
+                            .attr('width', 148)
+                            .attr('height', 150)
+                            .append('g')
+                            .attr('class', 'keycontainer')
+                            .style('left', 2000)
+                            .style('visibility', 'hidden')
+                            
+                            
+                    var keys = keyContainer.selectAll('rect')
+                    .data(objectColors)
+                    .enter()
+                    .append('rect')
+                    .attr("x", 10)
+                    .attr("y", function(d,i){return i*17})
+                    .attr('width', 148)
+                    .attr('height', 15)
+                    .attr('class', 'key')
+                 .attr('fill', function(d) { return d.color})
                  
-    //           var yforkey = d3.scaleLinear().range([0, 100]);
+              var yforkey = d3.scaleLinear().range([0, 100]);
 
-    //                  var arr = [20,40,60,80,100]
-    //                 keyContainer
-    //                 .selectAll('.keyText')
-    //                 .data(objectColors)
-    //                 .enter()
-    //                 .append('text')
-    //                 .attr('class', 'keyText')
-    //                 .style('fill', 'white')
-    //                 .style('opacity', .7)
-    //                 .attr('x',15)
-    //                 .attr('y', function(d,i){return arr[i]-5})
-    //                 .text(function(d){return parseClass(d.Category).replace("Income share held by the ","").replace("of the population ","")})
+                     var arr = [40, 70, 100, 130, 160]
+                    keyContainer
+                    .selectAll('.keyText')
+                    .data(objectColors)
+                    .enter()
+                    .append('text')
+                    .attr('class', 'keyText')
+                    .style('fill', 'white')
+                    .style('opacity', .7)
+                    .attr('x',15)
+                    .attr('y', function(d,i){return i*17 +12})
+                    .text(function(d){return parseClass(d.Category).replace("Income share held by the ","").replace("of the population ","")})
             
     
     
@@ -354,7 +358,7 @@ countriesFullObject.sort(function(obj2, obj1) {
 
 
                 .attr("y", function(d, i){
-                    return i*(height/700);
+                    return i*(height/800);
                     })
     			.attr("height", 1)
     			.attr("fill", function(d) {
@@ -368,8 +372,15 @@ countriesFullObject.sort(function(obj2, obj1) {
   
     		   .on("mouseover", function(d) {
     		       
+    		       d3.selectAll(".keycontainer")
+    		                .transition()
+    		                .duration(300)		
+
+    		                .style('visibility', 'visible')
+    		       
     		       d3.select( "#"+ d.Category+d.Country+d.StartingYear)
-    		                    .attr("fill", "#000000")
+    		                    .attr("opacity", ".3")
+    		                  //  .attr("stroke-width, '3px")
     		                    
     		                    .attr("font-size", 30)
                     div.attr("x", "0")
@@ -377,7 +388,7 @@ countriesFullObject.sort(function(obj2, obj1) {
                         .duration(200)		
                         .style("opacity", .9);		
                     div	.html(function() {
-                         var thisText =  "<b>" + d.Country.replace('_', ' ') + " from " + d.StartingYear + " to " + d.EndingYear + ":" + "</b>" + "</br>"+ parseClass(d.Category) + increasedDecreased(d.Change) + "&nbspfrom " + format(d.StartingYearValue) + " to " + format(d.EndingYearValue) + " percent, " + "a " + format(d.Change) + " percent" +" change."
+                         var thisText =  "<b>" + d.Country.replace('_', ' ') + " from " + d.StartingYear + " to " + d.EndingYear + ":" + "</b>" + "</br>"+ "<span class = 'classColor'>" + parseClass(d.Category) + "</span>"+ increasedDecreased(d.Change) + "&nbspfrom " + format(d.StartingYearValue) + " to " + format(d.EndingYearValue) + " percent, " + "a change of " + format(d.Change) + " percent."
                         return thisText;	
 
                       })
@@ -396,6 +407,8 @@ countriesFullObject.sort(function(obj2, obj1) {
                 
                 .on("mouseout", function(d, i) {
                 d3.select( "#"+ d.Category+d.Country+d.StartingYear)
+                
+                .attr("opacity", "1")
                     		.attr("fill", function(d) {
                         for(var i=0; i<objectColors.length; i++){
             		         if(d.Category === objectColors[i].Category){
@@ -412,7 +425,7 @@ countriesFullObject.sort(function(obj2, obj1) {
     		    	//Test mouse position to avoid overlap
       		    	function testMouseposition(mousepos){
     		    	    if(mousepos<400){
-    		    	        return 400
+    		    	        return 300
     		    	    } else { return mousepos }
     		    	        
     		    	    };
@@ -421,13 +434,22 @@ countriesFullObject.sort(function(obj2, obj1) {
     		    	//Test mouse position to avoid overlap
       		    	function testMousepositionX(mousepos){
     		    	    if(mousepos<width/2){
-    		    	        return 80
-    		    	    } else { return width-width/3.5 }
+    		    	        return 70
+    		    	    } else { return width-width/4 }
     		    	        
     		    	    };
     		    	
     		  //  	testMouseposition(d3.event)
     		    	
+      d3.selectAll(".classColor")
+          .data(countriesFullObject)
+          .style("color", function(d) {
+                        for(var i=0; i<objectColors.length; i++){
+            		         if(d.Category === objectColors[i].Category){
+            		            return objectColors[i].color ;
+            		         }
+            			}
+    		    	})
       
 
       svg.on('mouseover', function(d){
@@ -612,7 +634,6 @@ console.log("hello")
 }    
     
     
-     
 
 
 
