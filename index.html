@@ -13,6 +13,9 @@
 
     <style> 
     
+*, ::after, ::before {
+     box-sizing: content-box; 
+}
     .countryContainer{
         z-index: 2;
     }
@@ -131,6 +134,7 @@
 }
 
 
+
     
     .tick text { 
       fill: #a5acb7;
@@ -142,6 +146,15 @@
       fill: #a5acb7;
       font-size: 25;
     }
+    
+    
+    .minTitles{
+        fill: #a5acb7
+    }
+    .innerText{
+         fill: #a5acb7
+    }
+    
     
     .increasedDecreasedHighlight{
         /*font-weight: 800;*/
@@ -161,6 +174,7 @@
 		
 .col-12{
     max-width: 100%;
+    padding-right: 0;
 }
 
 		
@@ -192,7 +206,7 @@
 		.container{
 		  max-width: 100%;
 		  padding-left: 10%;
-		  padding-right: 10%;
+		  /*padding-right: 10%;*/
 		}
 		
 		.innerText{

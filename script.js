@@ -20,7 +20,7 @@ var togglingTitleFontSize = '1.5vw';
 
 var margin = {top: 40, right:0 , bottom: 14, left: 0},
     width = window.innerWidth- margin.left - margin.right,
-    height = window.innerHeight+2000- margin.top - margin.bottom;
+    height = window.innerHeight+5000- margin.top - margin.bottom;
     
 
 // if(window.innerWidth<500){
@@ -56,10 +56,7 @@ var objectKeys = [];
 // Where I put my key value pairs of colors
 var objectColors = []
 
-function myFunction(){
-    console.log('change')
-}
-//Start overlay
+
 
 //End overlay
 
@@ -78,8 +75,8 @@ function render(data, i){
                  .replace('cIncome', "Income")
                  .replace('dIncome', "Income")
                  .replace('eIncome', "Income")
-                 .replace('twenty', "quintile of the population ")
-                 .replace('by', "by the")
+                 .replace('by', "by the ")
+                 .replace('twenty', " quintile of the population ")
                  .replace(/_/g, ' ')}
                  
                  
@@ -182,20 +179,12 @@ function render(data, i){
         .append("text")      // text label for the x axis
         .attr("class", "miniTitles")
         .attr("x", width/2 )
-        .attr("y", -10)
+        .attr("y", -24)
         .style("text-anchor", "middle")
-        .html("Neg. Change" + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" +"Pos. Change" );
+        // .html("Neg. Change" + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" +"Pos. Change" );
+        .html("Most Change" );
+
         
-        
-        
-            svg
-        .append("text")      // text label for the x axis
-        .attr("class", "miniTitles")
-        .attr("id", "leastChange")
-        .attr("x", width/2 )
-        .attr("y", height/4)
-        .style("text-anchor", "middle")
-        .html("Least Change" );
   
   
   
@@ -235,20 +224,21 @@ function render(data, i){
                     .style('opacity', .7)
                     .attr('x',15)
                     .attr('y', function(d,i){return i*17 +12})
-                    .text(function(d){return parseClass(d.Category).replace("Income share held by the ","").replace("of the population ","")})
+                    .html(function(d){return parseClass(d.Category).replace("Income share held by the ","").replace("of the population ","")})
             
     
     
     
 
-        // console.log(data[0]);
-        // console.log(allcountries)
 var countriesFullObject = [];
+        
+        
+        
+        
         
         ///Yey! This javascript method prevents repetition
                 var listofuniquecountries = Array.from(new Set(countriesNotRepeated))
-                console.log(listofuniquecountries)
-                
+
                 //start adding elements to my single country objects. I want Country, Start year/end year, change.
                 
                 objectKeys.forEach(function(overallLoop) {
@@ -296,7 +286,6 @@ var countriesFullObject = [];
             
                                                 }
                                                 
-                                            //  console.log(valuesChange)
                                              });
                                              
                                              
@@ -310,12 +299,8 @@ var countriesFullObject = [];
                 
                                              
                                              
-                                            //  console.log(singleCountryObject.EndingYearValue)
-                                            //  console.log(singleCountryObject.StartingYearValue)
                                              singleCountryObject.Change = posOrNegChange(singleCountryObject.StartingYearValue, singleCountryObject.EndingYearValue);
-                                            //  var startValue = 0
-                                            //  singleCountryObject.StartValue = startValue
-        
+
                                             
                                             //find all the values for all quintiles 
                             
@@ -333,21 +318,108 @@ countriesFullObject.sort(function(obj2, obj1) {
 	// Ascending: first age less than the previous
 	return Math.abs(obj1.Change) - Math.abs(obj2.Change);
 });
-                console.log(countriesFullObject)
-                
+
              x.domain([-100, 100]);
              y.domain(countriesFullObject.map(function(d) { return d.Category; }));
 ///This is where I start building my chart with modified data                
 //  countriesFullObject.forEach(function(allChangeInnerLoop){
      
          var format = d3.format(".1f");
-         
+        
+                    
+                    
+    //     bar.append("rect")
+    // .attr("width", x)
+    // .attr("height", barHeight - 1);
+       var leastChange =
+         svg
+        .append("text")      // text label for the x axis
+        .data(countriesFullObject)
+        .attr("class", "miniTitles")
+        .attr("id", "leastChange")
+        .attr("x", width/2)
+        .attr("y", height/9)
+        .style("text-anchor", "middle")
+        .html("Least Change" );
+
+// bar.append("text")
+//     .attr("x", function(d) { return x(d) - 3; })
+//     .attr("y", barHeight / 2)
+//     .attr("dy", ".35em")
+//     .text(function(d) { return d; });
+    
+    var maxMinChangeForTopLable = []
+    
+    countriesFullObject.forEach(function(d){
+        maxMinChangeForTopLable.push(d.Change)
+    });
+    
+
+    
+    function round5(x)
+{
+    return Math.ceil(x/5)*5;
+}
+    
+         var maxChange =
+         svg
+         .data(countriesFullObject)
+        .append("text")      // text label for the x axis
+        .attr("class", "minTitles")
+        .attr("id", "maxChange")
+        .attr("x", function(){
+                    return x(round5(d3.max(maxMinChangeForTopLable)+5))
+                    })
+        .attr("y", -20)
+        .style("text-anchor", "middle")
+        // .style("fill", "#000000")
+        .html(function(){ return round5(d3.max(maxMinChangeForTopLable))+ "%"});
+        
+        
+        
+        
+   var minChange =
+         svg
+         .data(countriesFullObject)
+        .append("text")      // text label for the x axis
+        .attr("class", "minTitles")
+        .attr("id", "minChange")
+        .attr("x", function(){
+                    return x(round5(d3.max(maxMinChangeForTopLable)+5)*-1)
+                    })
+        .attr("y", -20)
+        .style("text-anchor", "middle")
+        // .style("fill", "#000000")
+        .html(function(){ return round5(d3.max(maxMinChangeForTopLable))*-1+ "%"});
+        
+        
+  var minChangeLine =
+         svg
+         .data(countriesFullObject)
+        .append("line")      // text label for the x axis
+        .attr("class", "minTitles")
+        .attr("id", "minChangeLine")
+        .attr("x1", function(){
+                    return x(round5(d3.max(maxMinChangeForTopLable)+5)*-1 -2)
+                    })
+        .attr("x2", function(){
+                    return x(round5(d3.max(maxMinChangeForTopLable)+6))
+                    })
+        .attr("y1", -15)
+        .attr("y2", -15)
+        .style('stroke', "#a5acb7")
+        .style('stroke-width', .5)
+
+
+        
         var rect = svg.selectAll(".anything")
                 .data(countriesFullObject)
                 .enter()
                 .append("rect")
-                .attr("class", "singleBar")
+                .attr("class", function(d){ return d.Country+"singleBar"})
                 .attr("id", function(d){return d.Category+d.Country+d.StartingYear})
+                                // .attr("id", function(d){return d.Category+d.Country+d.StartingYear})
+
                 .attr("x", function(d){
                     return d.Change < 0 ? x(d.Change) : x(0);
                     })
@@ -358,7 +430,7 @@ countriesFullObject.sort(function(obj2, obj1) {
 
 
                 .attr("y", function(d, i){
-                    return i*(height/800);
+                    return i*(height/1800);
                     })
     			.attr("height", 1)
     			.attr("fill", function(d) {
@@ -369,14 +441,56 @@ countriesFullObject.sort(function(obj2, obj1) {
             			}
     		    	})
     		    
-  
+               .on('click', function(d, callback){
+                   
+                //   console.log(this)
+                   
+                  var tempCountry = d.Country;
+                   
+                       svg.selectAll( "rect")
+                   
+                       .style('opacity', function(d){
+                          if (this.className.baseVal != tempCountry+ 'singleBar'){
+                           
+                              return ".1"
+                          } else {
+                              return '1'
+                          }
+                       })
+                    //   //Second Click
+                    
+                                    //   .on('click', function(d){
+                                          
+                                    //       var tempCountry2 = tempCountry;
+                                    //       svg.selectAll( "rect")
+                                   
+                                    //   .style('opacity', function(d){
+                                    //       if (this.className.baseVal === tempCountry2+ 'singleBar'){
+                                           
+                                    //           return "1"
+                                    //       }
+                                    //   })
+                           
+                           
+                    //   })
+                   
+
+                    //   d3.selectAll( "."+d.Country+'singleBar')
+                    //   .style('fill', '#000000')
+                   
+               })
     		   .on("mouseover", function(d) {
     		       
+
     		       d3.selectAll(".keycontainer")
     		                .transition()
     		                .duration(300)		
 
     		                .style('visibility', 'visible')
+    		      // d3.select(d.Category+d.Country+d.StartingYear+"text")
+    		      //          .style('visibility','visible')
+    		       
+    		      
     		       
     		       d3.select( "#"+ d.Category+d.Country+d.StartingYear)
     		                    .attr("opacity", ".3")
@@ -393,19 +507,43 @@ countriesFullObject.sort(function(obj2, obj1) {
 
                       })
                       
-                      
+                
                       ////LEFT DEAL WITH LATER
                         .style("left", (testMousepositionX(d3.event.pageX)) + "px")		
                         .style("top", (testMouseposition(d3.event.pageY - 28)) + "px");	
                         
-      
+                    //this is how I tartgeted the Y attribute of each rect
+                        var mouseY = this.y.baseVal.value
                         
-                        
-                        
+                    d3.select ('#' + d.Category+d.Country+d.StartingYear+"text")
+                    // .style ('fill', '#000000')
+                    .attr("y", function(){
+                        return mouseY +7
+                    })
+                    .attr("x", function(d){
+                    if(d.Change<0){
+                        return x(d.Change) -60 ;
+                    } else { return x(d.Change) +10 }
+                    
+                    
+                    // return d.Change < 0 ? x(d.Change) : x(0);
+                    })
+                    .attr("dy", ".35em")
+                    // .delay(10)
+                    .transition()
+                    .duration(200)
+                     .style('opacity', 1)    
                         //END MOUSEOUT
                     })					
                 
                 .on("mouseout", function(d, i) {
+                    
+                 d3.select ('#' + d.Category+d.Country+d.StartingYear+"text")
+                                    .transition()
+                                    .duration(200)
+                                      .style('opacity', 0)    
+
+
                 d3.select( "#"+ d.Category+d.Country+d.StartingYear)
                 
                 .attr("opacity", "1")
@@ -438,9 +576,19 @@ countriesFullObject.sort(function(obj2, obj1) {
     		    	    } else { return width-width/4 }
     		    	        
     		    	    };
-    		    	
-    		  //  	testMouseposition(d3.event)
-    		    	
+    
+    
+    	var ticks = svg.selectAll('.innerText')
+                    .data(countriesFullObject)
+                    .enter()
+                    .append('text')	  //  	testMouseposition(d3.event)
+                    .attr('class', 'innerText')
+                    .attr('id', function(d){ return d.Category+d.Country+d.StartingYear+"text"})
+                    .style('opacity', 0)
+                    // .style('fill', "#000000")
+                    .text(function(d){return format(d.Change) + "%";})   
+
+
       d3.selectAll(".classColor")
           .data(countriesFullObject)
           .style("color", function(d) {
@@ -452,28 +600,44 @@ countriesFullObject.sort(function(obj2, obj1) {
     		    	})
       
 
+     keyContainer.on('click', function(d){
+    //   console.log(this)  
+       
+          svg.selectAll('rect')
+                .style('opacity', 1)
+         
+     })
       svg.on('mouseover', function(d){
-            d3.selectAll('.singleBar')
+          
+            svg.selectAll('rect')
+            
                     .transition()
                       .duration(500)
 
                      .attr("y", function(d, i){
-                        return i*(height/170);
+                        return i*(height/300);
                         }) 
                             .delay(10)
                         .transition()
 
                         .duration(300)
                         .attr('height', 15)
+            
+
+
                         
-            d3.select("#lineSide")
-                    .attr("x1", width/10 )
-                    .attr("y1", height-50)
-                   .attr("x2", width/10 )
-                    .attr("y2", 10)
+            // d3.select("#lineSide")
+            //         .attr("x1", width/10 )
+            //         .attr("y1", height-50)
+            //       .attr("x2", width/10 )
+            //         .attr("y2", 10)
                     
             d3.select("#leastChange")
-                 .attr("y", height-20)
+                 .attr("y", height/1.5)
+                 
+           
+           
+          
 
 })
 
@@ -492,10 +656,7 @@ function increasedDecreased(positiveneg){
      
      
      
-    console.log(objectColors)    
-console.log("hello")        
-//  });    
-        
+
     }
     
     
@@ -555,7 +716,6 @@ console.log("hello")
  
          // End Create Object Keys
          
-                   console.log(objectKeys)
 
          
          var cleaned = [];
@@ -592,8 +752,7 @@ console.log("hello")
      
             });  
             
-            // console.log(cleaned)
-            
+
       
          
          
@@ -634,6 +793,7 @@ console.log("hello")
 }    
     
     
+     
 
 
 
